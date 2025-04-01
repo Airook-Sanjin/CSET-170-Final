@@ -11,6 +11,12 @@
         .radio-name .input_field{
             padding: 0;
         }
+        .SignUpLogIn input{
+            width: 60%;
+        }
+        .input_submit{
+            width: 60%;
+        }
     </style>
 </head>
 <body>
@@ -28,10 +34,10 @@
             <input type="text" name="last_name" placeholder="Last name" class="input_field"> <br>
             <input type="text" name="Email" placeholder="Email"required class="input_field"> <br>
             <input type="password" name="password" placeholder="Password" class="input_field" required> <br>
-            <div class="RadioInput">
+            <!-- <div class="RadioInput">
                 <div class="radio-name"><input type="radio" name="Teach-Stud" placeholder="Student" class="input_field"value="1" >Student</input></div>
                 <div class="radio-name"><input type="radio" name="Teach-Stud" placeholder="Teacher" class="input_field" value="0">Teacher</input></div>
-            </div>
+            </div> -->
             <input type="submit" value="Sign Up" class="input_submit">
             <button onclick="window.location.href = '/'" class ="input_submit">Log In</button>
         </form>

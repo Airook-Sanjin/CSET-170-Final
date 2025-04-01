@@ -46,7 +46,7 @@ def LogIn():
     except Exception as e:
         print(f"Error: {e}") 
         return render_template("Login.html", error = "User or password is not correct", success = None)
-#-------------------Create Account---------
+#--------------Create Account--------------
 @app.route("/Register", methods = ['GET'])
 def getAccount():
     
