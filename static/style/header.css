@@ -1,10 +1,8 @@
 :root{
-  --FONT: hsl(95, 11%, 22%);
-  --Primary: hsl(45, 20%, 88%);
-  --Secondary:hsl(23, 12%, 71%);
-  --Tertiary:hsl(34, 26%, 30%);
-
-
+  --FONT: #473C33;
+  --Primary:#ABC270;
+  --Secondary:#FEC868;
+  --Tertiary:#FDA769;
 
 }
 .barItem {
@@ -25,7 +23,7 @@ align-items: center;
 .logo {
   
   font-size: 3rem;
-  color: var(--Tertiary);
+  color: white;
 }
 
 .Logo-Container{
@@ -46,7 +44,7 @@ header li {
 }
 
 .topBar {
-  background-color: var(--Secondary);
+  background-color: var(--Primary);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -73,12 +71,12 @@ header li {
   padding:.5rem;
   width:50px;
   height:50px;
-  color: var(--Tertiary);
+  color: white;
 }
-/* .Profile:hover{
+.Profile:hover{
   color:black;
-  transition:.5s ease-in-out; */
-/* } */
+  transition:.5s ease-in-out;
+}
 
 .mainDiv {
   margin: auto;
@@ -94,9 +92,12 @@ header button {
   border: none;
   border-radius: 5px;
   margin-left: 10px;
+  background-color: white;
+  box-shadow: 0px 4px 4px hsla(0, 0%, 0%, 0.188),
+      0px 12px 12px hsla(0, 0%, 0%, 0.082);
 }
 header button:hover{
-  background-color: var(--Primary);
+  background-color: var(--Tertiary);
   transition: .2s ease-in-out;
 }
 header button:active{
@@ -128,7 +129,7 @@ body {
 
   grid-template-rows: auto 1fr auto;
   font-size: 14px;
-  background-color:var(--Primary);
+  background-color:hsl(0, 0%, 95%);
   align-items: start;
   min-height: 100vh;
 }
@@ -149,7 +150,7 @@ body {
   flex-flow: row wrap;
   padding: 30px 30px 20px 30px;
   color: var(--FONT);
-  background-color: var(--Secondary);
+  background-color: var(--Primary);
   border-top: 1px solid #e5e5e5;
 }
 
@@ -182,7 +183,7 @@ body {
 
 .footer address {
   font-style: normal;
-  color: var(--Primary);
+  color: var(--FONT);
 }
 
 .footer__btn {
@@ -193,7 +194,7 @@ body {
   max-width: max-content;
   background-color: var(--Tertiary);
   border-radius: 100px;
-  color: var(--Primary);
+  color: var(--FONT);
   line-height: 0;
   margin: 0.6em 0;
   font-size: 1rem;
@@ -224,7 +225,7 @@ body {
 }
 
 .nav__ul a {
-  color: var(--Primary);
+  color: var(--FONT);
 }
 
 .nav__ul--extra {
@@ -235,7 +236,7 @@ body {
 .legal {
   display: flex;
   flex-wrap: wrap;
-  color: var(--Primary);
+  color: var(white);
 }
 
 .legal__links {
