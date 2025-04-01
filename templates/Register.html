@@ -32,12 +32,13 @@
         <form class ="SignUpLogIn"action="/Register" method="POST">
             <input type="text" name="first_name" placeholder="First name" class="input_field"> <br>
             <input type="text" name="last_name" placeholder="Last name" class="input_field"> <br>
-            <input type="text" name="Email" placeholder="Email"required class="input_field"> <br>
+            <input type="text" name="SSN" placeholder="SSN" class="input_field"> <br>
+            <input type="text" name="PhoneNumber" placeholder="Phone #"required class="input_field"> <br>
+            <input type="text" name="Address" placeholder="Enter address" class="input_field"> <br>
+            <input type="text" name="Username" placeholder="Username" class="input_field"> <br>
+            
             <input type="password" name="password" placeholder="Password" class="input_field" required> <br>
-            <!-- <div class="RadioInput">
-                <div class="radio-name"><input type="radio" name="Teach-Stud" placeholder="Student" class="input_field"value="1" >Student</input></div>
-                <div class="radio-name"><input type="radio" name="Teach-Stud" placeholder="Teacher" class="input_field" value="0">Teacher</input></div>
-            </div> -->
+            
             <input type="submit" value="Sign Up" class="input_submit">
             <button onclick="window.location.href = '/'" class ="input_submit">Log In</button>
         </form>

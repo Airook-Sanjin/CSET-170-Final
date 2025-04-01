@@ -5,9 +5,9 @@ import secrets
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(15) # Generates and sets A secret Key for session with the secrets module
 
-# conn_str = "DatabaseConnection link" # connects to DataBase
-# engine = create_engine(conn_str, echo=True)
-# conn = engine.connect()
+conn_str = "mysql://root:cset155@localhost/bankdb" # connects to DataBase
+engine = create_engine(conn_str, echo=True)
+conn = engine.connect()
 # -----------------------------
 # @app.route("/")
 # def base():
@@ -24,10 +24,11 @@ def Base():
 
 def LogIn():
     try:
-        # ValidUser = (conn.execute(text("select Email, password from student Where Email = :Email"),request.form ).fetchall() + conn.execute(text("select Email, password from teacher Where Email = :Email"),request.form ).fetchall())
-        # User={}
-        # if conn.execute(text("Select Email From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone(): #Checks if ValidUser is in DB-Student Table 
-        #     User["Name"] = conn.execute(text("Select first_name From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0] #grabs first_name from DB-Student Table
+        ValidUser = (conn.execute(text("select username, password from user Where username = :username"),request.form ).fetchall() + conn.execute(text("select Email, password from admin Where Email = :Email"),request.form ).fetchall())
+        print(ValidUser)
+        User={}
+        # if conn.execute(text("Select username From user Where username in(:username)"),{"Email": ValidUser[0][0]}).fetchone(): #Checks if ValidUser is in DB-Student Table 
+            # User["Name"] = conn.execute(text("Select first_name From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0] #grabs first_name from DB-Student Table
         #     User["ID"] = conn.execute(text("Select Sid From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0]
         #     Student=True 
         #     print(User["Name"])
