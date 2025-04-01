@@ -47,7 +47,7 @@ def LogIn():
     except Exception as e:
         print(f"Error: {e}") 
         return render_template("Login.html", error = "User or password is not correct", success = None)
-#-------------------Create Account---------
+#--------------Create Account--------------
 @app.route("/Register", methods = ['GET'])
 def getAccount():
     
@@ -56,43 +56,25 @@ def getAccount():
 #--------SIGN UP----------------
 @app.route("/Register", methods = ['POST'])
 def createAccount():   
-    # # debugging checking if we are getting data
-    # data = request.form
-    # print(data)
+    first_name = request.form.get("first_name")
+    last_name = request.form.get("last_name")
+    SSN = request.form.get("SSN")
+    phone_number = request.form.get("PhoneNumber")
+    address = request.form.get("Address")
+    username = request.form.get("Username")
+    password = request.form.get("password")
     
     try:
-    #     RadioValue= request.form["Teach-Stud"]
-    #     if RadioValue == "1": #Checks whether Student or Teacher was clicked
-    #         # prevID = conn.execute(text("select Sid from student order by Sid desc Limit 1;")).fetchone() #Grabs last ID from Student table
-    #         if not prevID: # If There is no prevID, newID is 1
-    #             newID = 1
-    #         else:
-    #             newID = int(prevID[0])+1 # Increments 1 from prevID
-            
-    #         # conn.execute(text("insert into student(Sid, first_name, last_name, password, Email) values (:Sid, :first_name, :last_name, :password, :Email)"), {"Sid": newID, "first_name":request.form["first_name"], "last_name":request.form["last_name"],"password":request.form["password"],"Email":request.form["Email"]}
-    #                      )
-    #         # conn.commit() 
-            
-    #         # result = conn.execute(text('select * from student')).fetchall() #For Debugging
-            
-    #         for row in result:
-    #             print(row)
-    #     else:
-    #         # prevID = conn.execute(text("select Tid from teacher order by Tid desc Limit 1;")).fetchone() #Grabs last ID from Teacher table
-    #         if not prevID: # If There is no prevID, newID is 1
-    #             newID = 1
-    #         else:
-    #             newID = int(prevID[0])+1 # Increments 1 from prevID
-                
-    #         # conn.execute(text("insert into teacher(Tid, first_name, last_name, password, Email) values(:Tid, :first_name, :last_name, :password, :Email)"), {"Tid": newID, "first_name":request.form["first_name"], "last_name":request.form["last_name"],"password":request.form["password"], "Email":request.form["Email"]})
-            
-    #         # conn.commit()
-            
-    #         # result = conn.execute(text('select * from teacher')).fetchall()
-            
-    #         for row in result:
-    #             print(row)
-            
+        conn.execute(text("""INSERT INTO create_info_account (first_name, last_name, SSN, phone_number, address, username, password )
+                            VALUES (:first_name, :last_name, :SSN, :phone_number, :address, :username, :password)"""),
+                        {"first_name": first_name,
+                            "last_name": last_name,
+                            "SSN": SSN ,
+                            "phone_number": phone_number,
+                            "address": address,
+                            "username": username,
+                            "password": password}) #Insert into DB-User Table
+        conn.commit()
         return render_template("Register.html", error = None, success = "Successfull")
     except Exception as e:
         print(f"Error: {e}") 
