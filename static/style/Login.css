@@ -1,0 +1,158 @@
+:root{
+  --FONT: #473C33;
+  --Primary:#ABC270;
+  --Secondary:#FEC868;
+  --Tertiary:#FDA769;
+
+}
+span{
+  color:var(--Secondary);
+  font-size: xx-large;
+}
+h1 ,h2{
+  color: var(--FONT);
+}
+h1{
+  font-size:7rem;
+  margin:0;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: acumin-pro, system-ui, sans-serif;
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  font-size: 14px;
+  background-color:hsl(0, 0%, 95%);
+  align-items: start;
+  min-height: 100vh;
+  justify-items: center;
+}
+.Welcome-Container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:65vw;
+  height:100vh;
+  background-color: var(--Primary);
+  text-align: center;
+  justify-content: center;
+}
+.Form-Container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:35vw;
+  height: 100vh;
+}
+.Login-Container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    gap: 3rem;
+    justify-content: center;
+    
+}
+
+
+.SignUpLogIn{
+    display:flex;
+    width:50% ;
+    flex-direction: column;
+    align-items: center;
+    gap:1rem;
+  }
+  .RadioInput{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+    /* padding:0px 0px; */
+  }
+  .radio-name{
+    display: flex;
+    flex-direction: row;
+    /* width: 30%; */
+    gap:.6rem;
+  }
+  input[type=radio]{
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+    content: "";
+
+    font: inherit;
+    color: var(--FONT);
+    height:1.15em;
+    width:1.15em;
+
+    display:grid;
+    place-content: center;
+
+    border-radius: 50%;
+    border:.15em solid var(--Tertiary);
+    transform: translatey(0.195em);
+  }
+  /* --------Custom Radio Inputs------- */
+  input[type=radio]::before{
+    content: "";
+    background-color:var(--Tertiary);
+    border-radius: 50%;
+    transform: scale(0);
+    transition: .5s transform ease-in-out;
+    box-shadow: inset 1em 1em var(--Tertiary) ;
+
+    height:.65em;
+    width:.65em;
+  } 
+  input[type=radio]:checked::before{
+    transform: scale(1);
+  }
+
+  input[type=radio]:focus{
+    outline: max(2px,0.15em) solid var(--FONT);
+    outline-offset: max(2px,0.15em);
+  }
+  .radio-name:focus-within{
+    color: var(--Tertiary);
+    font-weight: bold;
+  }
+  /* ------------------CONT.Form */
+
+  .input_field {
+    width: 100%;
+    padding: 8px 20px;
+    /* margin: 8px 0; */
+    display: inline-block;
+    border: 1px solid var(--FONT);
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: hsl(0, 0%, 99%);
+  }
+  
+  .input_submit {
+    width: 100%;
+    background-color: var(--Secondary);
+    color:var(--FONT);
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0px 4px 4px hsla(0, 0%, 0%, 0.188),
+      0px 12px 12px hsla(0, 0%, 0%, 0.082);
+  }
+  
+  .input_submit:hover {
+    background-color: var(--Tertiary);
+  }
