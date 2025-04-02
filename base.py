@@ -83,6 +83,11 @@ def createAccount():
                             "address": address,
                             "username": username,
                             "password": password}) #Insert into DB-User Table
+        
+        conn.execute(text("""INSERT INTO admin (SSN)
+                            VALUES (:SSN)"""),
+                        {"SSN": SSN}) #Insert into DB-User Table
+        
         conn.commit()
         return render_template("Register.html", error = None, success = "Successfull")
     except Exception as e:
@@ -94,12 +99,37 @@ def createAccount():
 def Admin():
     try:
         print("ENTERING ADMIN PAGE")
-        PendingUsers =conn.execute(text("""Select * from create_info_account """)).fetchall()
+        PendingUsers = conn.execute(text("""Select * from create_info_account """)).fetchall()
         print(PendingUsers)
-        return render_template("AdminPage.html",PendingUsers = PendingUsers)
+        return render_template("AdminPage.html", PendingUsers = PendingUsers)
     except Exception as e:
-        print(f"YOU FAIL: {e}")
-        return render_template("AdminPage.html")
+        print(f"YOU FAIL 2: {e}")
+        return render_template("AdminPage.html",success = None)
+    
+@app.route("/Admin", methods = ['POST'])
+def AdminPOST():
+    try:
+       # Get the SSN of the user being approved
+        SSN = request.form.get("SSN")
+        if SSN:
+            # Update the status of the user in the database
+            conn.execute(text("UPDATE admin SET status = 1 WHERE SSN = :SSN"),
+                {"SSN": SSN})
+            conn.commit()
+            print(f"Approved user with SSN: {SSN}")
+        
+        # Fetch the updated list of pending users
+        PendingUsers = conn.execute(text("""
+                                         SELECT c.SSN, c.username, c.first_name, c.last_name, c.address, phone_number,a.form_number, a.status
+                                            FROM admin AS a
+                                            JOIN create_info_account AS c
+                                            ON a.SSN = c.SSN; where status = 0""")).fetchall()
+        return render_template("AdminPage.html", PendingUsers=PendingUsers, success = "User Approved")
+    except Exception as e:
+        print(f"YOU FAIL 1: {e}")
+        return render_template("AdminPage.html", success = None)
+    
+
     
 # -----------------USER HOMEPAGE --------------------
 @app.route("/Homepage")
