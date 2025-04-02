@@ -35,8 +35,8 @@ def Base():
 def LogIn():
     try:
         ValidUser = (conn.execute(text("select username, password from user Where username = :username"),request.form ).fetchall() + conn.execute(text("select username, password from admin Where username = :username"),request.form ).fetchall())
-        print(ValidUser)
-        print(ValidUser[0][0])
+        # print(ValidUser)
+        # print(ValidUser[0][0])
         User={}
         if conn.execute(text("Select username From user Where username in(:username)"),{"username": ValidUser[0][0]}).fetchone(): #Checks if ValidUser is in DB-Student Table 
             User["Name"] = conn.execute(text("Select username From user Where username in(:username)"),{"username": ValidUser[0][0]}).fetchone()[0] #grabs first_name from DB-Student Table
