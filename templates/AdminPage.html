@@ -1,17 +1,29 @@
 <link rel="stylesheet" href="../static/style/Form.css">
+<style>
+    .Account-Container{
+        overflow-y: scroll;
+        display: flex;
+        justify-content: space-around;
+    }
+</style>
 {% extends 'Base.html'%}
 {% block body %}
-{% for user in PendingUsers %}
 <div class="Account-Container">
-<section class ="User Container">
-<h1>{{user[2]}} {{user[3]}}</h1>
-<p>UserName: {{user[1]}}</p>
-<p>Address : {{user[5]}}</p>
-<p>Phone Number {{user[6]}}</p>
-<input type="hidden" value="{{user[0]}}">
-<input type="button" value="">
-
-</section>
+    {% for user in PendingUsers %}
+            <section class ="User Container">
+                {% if success %}
+                <h1 style="color: green;">{{ success }}</h1>
+                {% endif %}
+                <form action="/Admin" method="POST">
+                    <h1>{{user[2]}} {{user[3]}}</h1>
+                    <p>UserName: {{user[1]}}</p>
+                    <p>Address : {{user[5]}}</p>
+                    <p>Phone Number {{user[6]}}</p>
+                    <p>SSN : {{user[0]}}</p>
+                    <input type="hidden" name="SSN" value="{{user[0]}}">
+                    <input type="submit" name="approve" value="approval">
+                </form>
+            </section>
+    {% endfor %} 
 </div>
-{% endfor %}
 {% endblock %}
