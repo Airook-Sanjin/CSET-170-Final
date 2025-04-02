@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="../static/style/Form.css">
+{% extends 'Base.html'%}
+{% block body %}
+{% for user in PendingUsers %}
+<div class="Account-Container">
+<section class ="User Container">
+<h1>{{user[2]}} {{user[3]}}</h1>
+<p>UserName: {{user[1]}}</p>
+<p>Address : {{user[5]}}</p>
+<p>Phone Number {{user[6]}}</p>
+<input type="button" value="">
+
+</section>
+</div>
+{% endfor %}
+{% endblock %}
