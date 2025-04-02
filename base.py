@@ -80,7 +80,25 @@ def createAccount():
         print(f"Error: {e}") 
         return render_template("Register.html", error = "Failed", success = None) 
         
-        
+# -----------------ADMIN ADMINPAGE---------
+@app.route("/Admin")
+def Admin():
+    try:
+        print("ENTERING ADMIN PAGE")
+        PendingUsers =conn.execute(text("""Select * from create_info_account """)).fetchall()
+        print(PendingUsers)
+        return render_template("AdminPage.html",PendingUsers = PendingUsers)
+    except Exception as e:
+        print(f"YOU FAIL: {e}")
+        return render_template("AdminPage.html")
+    
+# -----------------USER HOMEPAGE --------------------
+@app.route("/HOMEPAGE")
+def UserPage():
+    try:
+        return render_template("HomePage.html")
+    except Exception as e:
+        print(f"YOU FAIL: {e}")
 #---------------end--------- 
 if __name__ == '__main__':
         app.run(debug=True)
