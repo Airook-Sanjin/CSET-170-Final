@@ -9,13 +9,23 @@ conn_str = "mysql://root:cset155@localhost/bankdb" # connects to DataBase
 engine = create_engine(conn_str, echo=True)
 conn = engine.connect()
 # -----------------------------
-# @app.route("/")
-# def base():
-#     try:
-#         return render_template("Base.html")
-#     except Exception as e:
-#         print(e)
+# ----------------------Before each load------------------------------------
+@app.before_request # Before each request it will look for the values below
+def load_user():
+    if "TestID" in session:
+        g.TestID = session["TestID"]
+    else:
+        g.TestID = None
+    if "Admin" in session:
+        g.Admin = session["Admin"]
+    else:
+        g.Admin = None
         
+    if "User" in session:
+        g.User = session["User"]
+    else:
+        g.User = None
+# ---------------------------
 @app.route("/", methods = ["GET"])   #This will be what sends us to login
 def Base():
     return render_template("Login.html")
@@ -24,26 +34,25 @@ def Base():
 
 def LogIn():
     try:
-        ValidUser = (conn.execute(text("select username, password from user Where username = :username"),request.form ).fetchall() + conn.execute(text("select Email, password from admin Where Email = :Email"),request.form ).fetchall())
+        ValidUser = (conn.execute(text("select username, password from user Where username = :username"),request.form ).fetchall() + conn.execute(text("select username, password from admin Where username = :username"),request.form ).fetchall())
         print(ValidUser)
+        print(ValidUser[0][0])
         User={}
-        # if conn.execute(text("Select username From user Where username in(:username)"),{"Email": ValidUser[0][0]}).fetchone(): #Checks if ValidUser is in DB-Student Table 
-            # User["Name"] = conn.execute(text("Select first_name From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0] #grabs first_name from DB-Student Table
-        #     User["ID"] = conn.execute(text("Select Sid From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0]
-        #     Student=True 
-        #     print(User["Name"])
-        # else: # if ValidUser is not in DB-Student Table
-        #     Student=False
-        #     User["Name"] = conn.execute(text("Select first_name From teacher Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0] #grabs first_name from DB-Teacher Table
-        #     User["ID"] = conn.execute(text("Select tid From teacher Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0]
-        #     print(User["Name"])
-        # session["Student"] = Student # Storing Student in SessionStorage to see across mutliple requests
-        # g.Student=Student # Makes Student availabe on current request for template
-        # session["User"] = User # Storing User in SessionStorage to see across mutliple requests
-        # g.User = User # Makes UserName availabe on current request for template
-        # print(g.User["Name"])
+        if conn.execute(text("Select username From user Where username in(:username)"),{"username": ValidUser[0][0]}).fetchone(): #Checks if ValidUser is in DB-Student Table 
+            User["Name"] = conn.execute(text("Select username From user Where username in(:username)"),{"username": ValidUser[0][0]}).fetchone()[0] #grabs first_name from DB-Student Table
+            # User["ID"] = conn.execute(text("Select Sid From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0]
+            Admin=False 
+        else: # if ValidUser is not in DB-Student Table
+            User["Name"] = conn.execute(text("Select username From admin Where username in(:username)"),{"username": ValidUser[0][0]}).fetchone()[0]
+            Admin=True
+            print("Admin")
+        session["Admin"] = Admin # Storing Student in SessionStorage to see across mutliple requests
+        g.Admin=Admin # Makes Student availabe on current request for template
+        session["User"] = User # Storing User in SessionStorage to see across mutliple requests
+        g.User = User # Makes UserName availabe on current request for template
+        print(f"User Name: {g.User['Name']}")
         
-        return render_template("Accounts.html")
+        return render_template("HomePage.html")
     except Exception as e:
         print(f"Error: {e}") 
         return render_template("Login.html", error = "User or password is not correct", success = None)
@@ -93,12 +102,14 @@ def Admin():
         return render_template("AdminPage.html")
     
 # -----------------USER HOMEPAGE --------------------
-@app.route("/HOMEPAGE")
+@app.route("/Homepage")
 def UserPage():
+    g.User=session["User"]
     try:
         return render_template("HomePage.html")
     except Exception as e:
         print(f"YOU FAIL: {e}")
+        
 #---------------end--------- 
 if __name__ == '__main__':
         app.run(debug=True)

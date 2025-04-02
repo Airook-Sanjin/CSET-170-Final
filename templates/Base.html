@@ -16,22 +16,22 @@
           <p>PyBank</p>
         </div>
           <ul class="barItem">
-           
-            <li><button id="ViewAccounts" onclick="window.location.href = '/Account'">VIEW ACCOUNTS</button></li>
-            <li><button id="ViewAccounts" onclick="window.location.href = '/MakeTest'">MAKE TEST</button></li>
-            <li><button id="ViewAccounts" onclick="window.location.href = '/DeleteTest'">DELETE TEST</button></li>
-
-            <li><button id="ViewAccounts" onclick="window.location.href = '/EditTest'">EDIT TEST</button></li>
-
-            <li><button id="ViewAccounts" onclick="window.location.href = '/ViewTest'">VIEW TEST</button></li>
+            <li><button id="ViewAccounts" onclick="window.location.href = '/'">VIEW ACCOUNTS</button></li>
+           {%if g.Admin %}
+            <li><button id="ViewAccounts" onclick="window.location.href = '/Admin'">Pending Accounts</button></li>
+            {%else%}
+            {%endif%}
+            
 
            
           </ul>
         </div>
 
         <div class="Right-side">
-          
-          <h4>Hello user</h4>
+          {%if g.User %}
+          <h4>Hello {{g.User["Name"]}}</h4>
+          {%else%}
+          {% endif %}
           <iconify-icon class="Profile" icon="mdi:account-circle">   </iconify-icon>
           <button id="ViewAccounts" onclick="window.location.href = '/'">Log Out</button>
           
