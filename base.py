@@ -27,21 +27,21 @@ def LogIn():
         ValidUser = (conn.execute(text("select username, password from user Where username = :username"),request.form ).fetchall() + conn.execute(text("select Email, password from admin Where Email = :Email"),request.form ).fetchall())
         print(ValidUser)
         User={}
-        # if conn.execute(text("Select username From user Where username in(:username)"),{"Email": ValidUser[0][0]}).fetchone(): #Checks if ValidUser is in DB-Student Table 
-            # User["Name"] = conn.execute(text("Select first_name From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0] #grabs first_name from DB-Student Table
-        #     User["ID"] = conn.execute(text("Select Sid From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0]
-        #     Student=True 
-        #     print(User["Name"])
-        # else: # if ValidUser is not in DB-Student Table
-        #     Student=False
-        #     User["Name"] = conn.execute(text("Select first_name From teacher Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0] #grabs first_name from DB-Teacher Table
-        #     User["ID"] = conn.execute(text("Select tid From teacher Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0]
-        #     print(User["Name"])
-        # session["Student"] = Student # Storing Student in SessionStorage to see across mutliple requests
-        # g.Student=Student # Makes Student availabe on current request for template
-        # session["User"] = User # Storing User in SessionStorage to see across mutliple requests
-        # g.User = User # Makes UserName availabe on current request for template
-        # print(g.User["Name"])
+        if conn.execute(text("Select username From user Where username in(:username)"),{"Email": ValidUser[0][0]}).fetchone(): #Checks if ValidUser is in DB-Student Table 
+            User["Name"] = conn.execute(text("Select first_name From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0] #grabs first_name from DB-Student Table
+            User["ID"] = conn.execute(text("Select Sid From student Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0]
+            Student=True 
+            print(User["Name"])
+        else: # if ValidUser is not in DB-Student Table
+            Student=False
+            User["Name"] = conn.execute(text("Select first_name From teacher Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0] #grabs first_name from DB-Teacher Table
+            User["ID"] = conn.execute(text("Select tid From teacher Where Email in(:Email)"),{"Email": ValidUser[0][0]}).fetchone()[0]
+            print(User["Name"])
+        session["Student"] = Student # Storing Student in SessionStorage to see across mutliple requests
+        g.Student=Student # Makes Student availabe on current request for template
+        session["User"] = User # Storing User in SessionStorage to see across mutliple requests
+        g.User = User # Makes UserName availabe on current request for template
+        print(g.User["Name"])
         
         return render_template("Accounts.html")
     except Exception as e:
