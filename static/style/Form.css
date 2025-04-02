@@ -1,7 +1,4 @@
-:root{
-    --Shadow:28px 28px 47px hsla(217, 72%, 18%,16%),
-    -23px -23px 45px hsla(0, 0%, 100%,100%)
-}
+
 .Account-Container{
     display: flex;
     height:100vh;
