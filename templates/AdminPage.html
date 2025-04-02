@@ -17,10 +17,12 @@
                 <form action="/Admin" method="POST">
                     <h1>{{user[2]}} {{user[3]}}</h1>
                     <p>UserName: {{user[1]}}</p>
-                    <p>Address : {{user[5]}}</p>
+                    <p>Address : {{user[2]}}</p>
                     <p>Phone Number {{user[6]}}</p>
                     <p>SSN : {{user[0]}}</p>
                     <input type="hidden" name="SSN" value="{{user[0]}}">
+                    <input type="hidden" name="username" value="{{user[1]}}">
+                    <input type="hidden" name="password" value="{{user[8]}}">
                     <input type="submit" name="approve" value="approval">
                 </form>
             </section>
