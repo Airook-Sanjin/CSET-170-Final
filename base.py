@@ -188,6 +188,7 @@ def AdminPOST():
 @app.route("/Homepage")
 def UserPage():
     try:
+        
         return render_template("HomePage.html")
     
     except Exception as e:
