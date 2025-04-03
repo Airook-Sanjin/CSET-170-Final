@@ -111,19 +111,27 @@ def AdminPOST():
     try:
        # Get the SSN of the user being approved
         SSN = request.form.get("SSN")
+        username = request.form.get("username")
+        password = request.form.get("password")
         if SSN:
             # Update the status of the user in the database
             conn.execute(text("UPDATE admin SET status = 1 WHERE SSN = :SSN"),
                 {"SSN": SSN})
-            conn.commit()
             print(f"Approved user with SSN: {SSN}")
         
         # Fetch the updated list of pending users
         PendingUsers = conn.execute(text("""
-                                         SELECT c.SSN, c.username, c.first_name, c.last_name, c.address, phone_number,a.form_number, a.status
+                                         SELECT c.SSN, c.username, c.first_name, c.last_name, c.address, phone_number,a.form_number, a.status, c.password
                                             FROM admin AS a
                                             JOIN create_info_account AS c
                                             ON a.SSN = c.SSN; where status = 0""")).fetchall()
+        
+        conn.execute(text("""INSERT INTO user (username, password, SSN )
+                            VALUES (:username, :password, :SSN)"""),
+                        {"username": username,
+                            "password": password,
+                            "SSN": SSN})
+        conn.commit()
         return render_template("AdminPage.html", PendingUsers=PendingUsers, success = "User Approved")
     except Exception as e:
         print(f"YOU FAIL 1: {e}")
