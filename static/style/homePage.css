@@ -1,0 +1,81 @@
+.hero{
+    width: 100%;
+    height: 20vh;
+    background-color: antiquewhite;
+    /* background-image: url(https://www.srividyatech.com/wp-content/uploads/2020/12/Python-Certification-Training-Course.jpg); */
+    background-repeat: no-repeat;
+    background-position: cover;
+}
+
+.page-container{
+    display: flex; /* Use flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    
+    width: 100%;
+    min-height: 70vh;
+    /* background-color: aqua; */
+}
+
+.grid-Container{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    min-width: 60%;
+    height: auto;
+}
+
+.account-card{
+    display: flex;
+    flex-direction: row;
+    width: 550px;
+    height: 220px;
+    background-color: rgb(251, 191, 191);
+    align-self: center;
+    margin: auto;
+    border-radius: 8px;
+    padding: 24px 24px 0 24px;
+}
+
+.account-info{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height:100%;
+    
+}
+.account-info h2 {/*searched this*/
+    overflow: hidden; /* Ensure overflowing text is hidden */
+    white-space: nowrap; /* Prevent text from wrapping to the next line */
+    text-overflow: ellipsis; /* Add ellipsis (...) for overflowing text */
+    max-width: 200px; /* Set a maximum width for the text container */
+    display: block; /* Ensure the element behaves like a block for proper truncation */
+}
+
+.account-info h1, h2, h3, h4{
+    text-align: start;
+    margin: 0;
+}
+
+.view-account-button{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height: 40%;
+}
+
+.acount-card-btn{
+    width: 80%;
+    height: 60px;
+    border-radius: 10px;
+    border-style: solid 1px black;
+    border-color: black;
+    background-color: transparent;
+    font-size: 20px;
+}
+
+.acount-card-btn:hover{
+    transition: 1.5s;
+    background-color: rgb(0, 0, 0);
+    color: white;
+}

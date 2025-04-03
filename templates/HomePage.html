@@ -1,4 +1,49 @@
+<style>
+    .hero h1{
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    .hero{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+    .page-container{
+        align-items: center; /* Center vertically */
+    }
+</style>
 {% extends 'Base.html' %}
 {%block body%}
-
+<section class="hero"><h1>Welcome to PyBank</h1></section>
+<section class="page-container">
+    <div class="grid-Container">
+        <div class="account-card">
+            <div class="account-info">
+                <h2>360 checkings</h2>
+                <h1 style="font-size: 40px;">$0</h1>
+                <h4>AVAILABLE BALANCE</h4>
+            </div>
+            <div class="view-account-button"><button class="acount-card-btn" onclick="window.location.href = '/ViewAccount'">View Account</button></div>
+        </div>
+        <div class="account-card">
+            <div class="account-info">
+                <h2>360 Performance Savings with a Very Long Name That Needs Truncation</h2>
+                <h1 style="font-size: 40px;">$505</h1>
+                <h4>AVAILABLE BALANCE</h4>
+            </div>
+            <div class="view-account-button"><button class="acount-card-btn" onclick="window.location.href = '/ViewAccount'">View Account</button></div>
+        </div>
+        <div class="account-card">
+            <div class="account-info">
+                <h2>QuickSilver Credit Card</h2>
+                <h1 style="font-size: 40px;">$327</h1>
+                <h4>AVAILABLE BALANCE</h4>
+            </div>
+            <div class="view-account-button"><button class="acount-card-btn" onclick="window.location.href = '/ViewAccount'">View Account</button></div>
+        </div>
+        <div class="account-card"></div>
+    </div>
+</section>
 {% endblock %}

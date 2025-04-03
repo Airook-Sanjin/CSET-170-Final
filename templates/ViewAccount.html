@@ -1,0 +1,55 @@
+<link rel="stylesheet" href="../static/style/ViewAccount.css">
+<style>
+    .hero{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        min-height: 30vh;
+        background-color: bisque;
+    }
+    .page-container{
+        height: 78vh;
+        margin-bottom: 2%;
+    }
+</style>
+{% extends 'Base.html' %}
+{%block body%}
+<section class="hero">
+    <div class="hero-board">
+        <div class="detail-container">
+            <div class="bank-info">
+                <div class="position-info">
+                    <h1>360 Performance Savings Account</h1>
+                    <h4>360 Performance Savings...4482</h4>
+                    <h4>View Account Details</h4>
+                </div>
+            </div>
+
+            <div class="money">
+                <div class="position-money">
+                    <h3>AVAILABLE BALANCE</h3>
+                    <h1>$240</h1>
+                </div>
+            </div>
+            <div class="transaction-btn-div">
+                <button class="transfer-btn">Transfer Money</button>
+            </div>
+        </div>
+    </div>
+   
+</section>
+<section class="page-container">
+
+    <div class="page-container-va">
+
+        <div class="sub-bar">
+            <div class="sub-bar-card"><h3>Transfer Money</h3></div>
+            <div class="sub-bar-card"><h3>Automatic Savings</h3></div>
+            <div class="sub-bar-card"><h3>View Statements</h3></div>
+            <div class="sub-bar-card"><h3>Account Service</h3></div>
+        </div>
+        <div class="upcoming-transaction"></div>
+        <div class="past-transaction"></div>
+    </div>
+</section>
+{% endblock %}

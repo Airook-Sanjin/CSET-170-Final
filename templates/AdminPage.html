@@ -5,24 +5,31 @@
         display: flex;
         justify-content: space-around;
     }
+    .Container{
+        min-width:200px;
+        text-align: center;
+    }
 </style>
 {% extends 'Base.html'%}
 {% block body %}
 <div class="Account-Container">
     {% for user in PendingUsers %}
             <section class ="User Container">
-                {% if success %}
-                <h1 style="color: green;">{{ success }}</h1>
+                {% if user[7] == 1 %}
+                <h1 style="color: green;">Approved</h1>
+                {% else %}
+                <h1 style="color: red;">Not Approved</h1>
                 {% endif %}
                 <form action="/Admin" method="POST">
                     <h1>{{user[2]}} {{user[3]}}</h1>
-                    <p>UserName: {{user[1]}}</p>
-                    <p>Address : {{user[2]}}</p>
-                    <p>Phone Number {{user[6]}}</p>
-                    <p>SSN : {{user[0]}}</p>
+                    <p><strong>UserName :</strong> {{user[1]}}</p>
+                    <p><strong>Address :</strong> {{user[4]}}</p>
+                    <p><strong>Phone Number :</strong> {{user[5]}}</p>
+                    <p><strong>SSN :</strong> {{user[0]}}</p>
                     <input type="hidden" name="SSN" value="{{user[0]}}">
                     <input type="hidden" name="username" value="{{user[1]}}">
                     <input type="hidden" name="password" value="{{user[8]}}">
+                    <input type="hidden" name="status" value="{{user[7]}}">
                     <input type="submit" name="approve" value="approval">
                 </form>
             </section>
