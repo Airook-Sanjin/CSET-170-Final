@@ -99,12 +99,18 @@ def createAccount():
 def Admin():
     try:
         print("ENTERING ADMIN PAGE")
-        PendingUsers = conn.execute(text("""Select * from create_info_account """)).fetchall()
+        # Fetch all users with their status
+        PendingUsers = conn.execute(text("""
+            SELECT c.SSN, c.username, c.first_name, c.last_name, c.address, c.phone_number, a.form_number, a.status, c.password
+            FROM admin AS a
+            JOIN create_info_account AS c
+            ON a.SSN = c.SSN
+        """)).fetchall()
         print(PendingUsers)
-        return render_template("AdminPage.html", PendingUsers = PendingUsers)
+        return render_template("AdminPage.html", PendingUsers=PendingUsers)
     except Exception as e:
         print(f"YOU FAIL 2: {e}")
-        return render_template("AdminPage.html",success = None)
+        return render_template("AdminPage.html", success=None)
     
 @app.route("/Admin", methods = ['POST'])
 def AdminPOST():
@@ -113,6 +119,7 @@ def AdminPOST():
         SSN = request.form.get("SSN")
         username = request.form.get("username")
         password = request.form.get("password")
+        
         if SSN:
             # Update the status of the user in the database
             conn.execute(text("UPDATE admin SET status = 1 WHERE SSN = :SSN"),
@@ -147,7 +154,15 @@ def UserPage():
         return render_template("HomePage.html")
     except Exception as e:
         print(f"YOU FAIL: {e}")
-        
+
+# -----------------VIEW ACCOUNT --------------------
+@app.route("/ViewAccount")
+def getViewAcc():
+    g.User=session["User"]
+    try:
+        return render_template("ViewAccount.html")
+    except:
+        return render_template("ViewAccount.html")
 #---------------end--------- 
 if __name__ == '__main__':
         app.run(debug=True)
