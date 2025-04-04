@@ -9,9 +9,15 @@
 <body>
     
         <div class = "Login-Container">
-            <div class ="Welcome-Container">
-            <h1>Welcome</h1>
+            {%if error%}
+            <div class ="Welcome-Container" style="background-color:red ;">
+        
+            <h1>Not a User</h1>
+        {%else%}
+        <div class ="Welcome-Container">
+        <h1>Welcome</h1>
             <h2>to <span>PyBank</span></h2>
+        {%endif%}
         </div>
         <div class="Form-Container">
             <form class ="SignUpLogIn" action="/" method="POST">
