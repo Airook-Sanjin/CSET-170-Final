@@ -187,12 +187,28 @@ def AdminPOST():
 # -----------------USER HOMEPAGE --------------------
 @app.route("/Homepage")
 def UserPage():
+    
     try:
-        
-        return render_template("HomePage.html")
+        Cards = conn.execute(text("""SELECT * FROM credit_debit_card """)).mappings().fetchmany()
+        print(Cards)
+        if Cards==[]:
+            Cards = False
+        else:
+            Cards="1Card"
+        return render_template("HomePage.html",Cards = Cards)
     
     except Exception as e:
         print(f"YOU FAIL: {e}")
+        return render_template("HomePage.html",Cards = Cards)
+# ------------------------OPENNING AN ACCOUNT(CARD)------------
+@app.route("/CardCreation")
+def CreatCard():
+    try:
+        print("ENTERING CARD CREATION")
+        return render_template("CreateCard.html")
+    except Exception as  e:
+        print(f"ERROR: {e} ")
+        return render_template("CreateCard.html")
 
 # -----------------VIEW ACCOUNT --------------------
 @app.route("/ViewAccount")

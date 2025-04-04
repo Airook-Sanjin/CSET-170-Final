@@ -7,6 +7,11 @@
     -23px -23px 45px hsla(0, 0%, 100%,100%)
 
 }
+a,a:active,a:visited{
+  color:var(--FONT);
+  text-decoration: none;
+}
+
 .barItem {
   display: flex;
   align-items: center;
