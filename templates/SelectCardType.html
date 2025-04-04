@@ -1,0 +1,56 @@
+{% extends 'Base.html' %}
+{% block body %}
+{% if AccountType == 'Checking/Saving' %}
+<div Class = "Container">
+    <div>
+        <h2>For your everyday banking needs</h2>
+
+    </div>
+<section class = "Checking AccountContainer">
+    <h1>Checking Accounts</h1>
+    <p>For Your everyday banking needs- no minimun required</p>
+<div class = "Card">
+    <h3>350 Checking saving</h3>
+    <h4>Pay bills, make deposits, and transfer money -all without the extra fees</h4>
+    <ul>
+        <li>No fees or minimums</li>
+        <li>24/7 mobile banking on the app</li>
+        <li>70,000+ fee-free ATMS</li>
+    </ul>
+    <button class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = '360 Checking Saving')}}'"> Open account</button>
+</div>
+</section>
+
+<section class = " Saving AccountContainer">
+    <h1>Savings Accounts</h1>
+    <p>For Your everyday banking needs- no minimun required</p>
+<div class = "Card">
+    <h3>350 Performance Saving</h3>
+    <p>A fee-free savings account you can open in about 5 minutes</p>
+    <ul>
+        <li>3.70% APY</li> 
+        <li>No fees or minimums</li>
+        <li>24/7 mobile banking on the app</li>
+    </ul>
+    <button  class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = '360 Performance Savings')}}'" class="OpenAccount button"> Open account</button>
+</div>
+</section>
+</div>
+{% else %}
+<section class = " Credit AccountContainer">
+    <h1>Savings Accounts</h1>
+    <p>For Your everyday banking needs- no minimun required</p>
+<div class = "Card">
+    <h3>350 Performance Saving</h3>
+    <p>A fee-free savings account you can open in about 5 minutes</p>
+    <ul>
+        <li>3.70% APY</li> 
+        <li>No fees or minimums</li>
+        <li>24/7 mobile banking on the app</li>
+    </ul>
+    <button  class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = '360 Performance Savings')}}'" class="OpenAccount button"> Open account</button>
+</div>
+</section>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,3 +1,19 @@
-{%extends 'Base.html'%}
-{%block body%}
+{% extends 'Base.html'%}
+{% block body %}
+<h1>{{CardType}}</h1>
+<div class="Account-info">
+    <p>Verify Your INFO</p>
+    <p>{{UserInfo["FullName"]}}</p>
+    <p>{{UserInfo["Address"]}}</p>
+    <p>{{UserInfo["PhoneNumber"]}}</p>
+    <p>{{UserInfo["SSN"]}}</p>
+    <form action="/CreateCard">
+        <input type="hidden" name="Cardtype" value="{{CardType}}">
+    <input type="submit"name="CreateCard"/>
+    </form>
+    <buton>Cancel</button>
+</div>
+<div>
+
+</div>
 {% endblock %}
