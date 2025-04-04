@@ -16,12 +16,12 @@
 {%block body%}
 <section class="hero">
     <div class="hero-board">
-        {% for card in cards %}
+        {% if card %}
             <div class="detail-container">
                 <div class="bank-info">
                     <div class="position-info">
                         <h1>{{ card['card_name'] }}</h1>
-                        <h4><h4>{{ card['card_name'] }}...{{ card['last_4_digits'] }}</h4></h4>
+                        <h4>{{ card['card_name'] }}...{{ card['last_4_digits'] }}</h4>
                         <h4>View Account Details</h4>
                     </div>
                 </div>
@@ -35,10 +35,11 @@
                 <div class="transaction-btn-div">
                     <button class="transfer-btn">Transfer Money</button>
                 </div>
-           </div>
-        {% endfor %}
+            </div>
+        {% else %}
+            <p>No account details available.</p>
+        {% endif %}
     </div>
-   
 </section>
 <section class="page-container">
 

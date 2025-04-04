@@ -15,32 +15,35 @@
     }
 </style>
 
-
 {% extends 'Base.html' %}
 {%block body%}
 <section class="hero"><h1>Welcome to PyBank</h1></section>
 <section class="page-container">
     <div class="grid-Container">
-        {%if not cards%}
-        <div class="account-card">
-            <div class="account-info">
-                <h2>Open an Account</h2>
-                <h4>Explore all our products now to find an account that's right for you.</h4>
+        {% if not cards %}
+            <div class="account-card">
+                <div class="account-info">
+                    <h2>Open an Account</h2>
+                    <h4>Explore all our products now to find an account that's right for you.</h4>
+                </div>
+                <div class="view-account-button">
+                    <a type="Button" onclick="OpenModal()" class="acount-card-btn">Open A New Account</a>
+                </div>
             </div>
-            <div class="view-account-button"><a type="Button" onclick="OpenModal()" class="acount-card-btn">Open A New Account</a></div>
-        </div>
-        {%else%}
-        {% for card in cards %}
-        <div class="account-card">
-            <div class="account-info">
-                <h2></h2>
-                <h1 style="font-size: 40px;">{{ card['balance'] }}</h1>
-                <h4>AVAILABLE BALANCE</h4>
-            </div>
-            <div class="view-account-button"><button class="acount-card-btn" onclick="window.location.href = '/ViewAccount'">View Account</button></div>
-        </div>
-        {% endfor %}
-        {%endif%}
+        {% else %}
+            {% for card in cards %}
+                <div class="account-card" id="card-{{ card['card_id'] }}">
+                    <div class="account-info">
+                        <h2>{{ card['card_name'] }}</h2>
+                        <h1 style="font-size: 40px;">${{ card['balance'] }}</h1>
+                        <h4>AVAILABLE BALANCE</h4>
+                    </div>
+                    <div class="view-account-button">
+                        <button class="acount-card-btn" onclick="window.location.href = '/ViewAccount?card_id={{ card['card_id'] }}'">View Account</button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
     <!-- Modal Structure -->
 <div class="modal fade" id="accountModal">
@@ -54,7 +57,6 @@
                 <form> 
                     <input type="button"  onclick="window.location.href= '{{url_for('SelectingCardType',AccountType='Credit')}}'" value="Credit" name="Credit" placeholder="Credit">
                     <input type="button"  onclick="window.location.href= '{{url_for('SelectingCardType',AccountType='Checking/Saving')}}'" value="Checking/Saving" name="Checking/Saving" placeholder="Checking/Saving">
-                    
                 </form>
             </div>
             <div class="modal-footer">
