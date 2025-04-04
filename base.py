@@ -187,15 +187,23 @@ def AdminPOST():
 # -----------------USER HOMEPAGE --------------------
 @app.route("/Homepage")
 def UserPage():
-    
     try:
-        Cards = conn.execute(text("""SELECT * FROM credit_debit_card """)).mappings().fetchmany()
-        print(Cards)
-        if Cards==[]:
-            Cards = False
+        g.User = session["User"]
+        
+        cards = conn.execute(text("""
+            SELECT ccc.name AS card_name, ccc.card_number, ccc.balance
+                FROM credit_debit_card AS ccc
+                JOIN user AS u
+                ON ccc.bank_acc_num = u.bank_acc_num
+                WHERE u.username = :username;
+        """), {"username": g.User["Name"]}).mappings().fetchmany()
+        
+        print(cards)
+        if cards==[]:
+            cards = False
         else:
-            Cards="1Card"
-        return render_template("HomePage.html",Cards = Cards)
+            cards="1Card"
+        return render_template("HomePage.html",cards = cards)
     
     except Exception as e:
         print(f"YOU FAIL: {e}")
@@ -213,11 +221,35 @@ def CreatCard():
 # -----------------VIEW ACCOUNT --------------------
 @app.route("/ViewAccount")
 def getViewAcc():
-    g.User=session["User"]
-    try:
-        return render_template("ViewAccount.html")
-    except:
-        return render_template("ViewAccount.html")
+    try: 
+        g.User = session["User"]
+       
+        # Fetch card details for the logged-in user
+        cards = conn.execute(text("""
+            SELECT ccc.name AS card_name, ccc.card_number, ccc.balance
+                FROM credit_debit_card AS ccc
+                JOIN user AS u
+                ON ccc.bank_acc_num = u.bank_acc_num
+                WHERE u.username = :username;
+        """), {"username": g.User["Name"]}).mappings().fetchall()
+        
+         # Add the last 4 digits of the card number to each card
+        cards = [
+            {
+                **card,
+                "last_4_digits": str(card["card_number"])[-4:]  # Extract last 4 digits
+            }
+            for card in cards
+        ]
+
+        # Debugging: Print card details
+        # for card in cards:
+        #     print(f"Card Name: {card['card_name']}, Last 4 Digits: {card['last_4_digits']}, Balance: {card['balance']}")
+            
+        return render_template("ViewAccount.html", cards=cards)
+    except Exception as e:
+        # print(f"Error: {e}")
+        return render_template("ViewAccount.html", cards=[])
 #---------------end--------- 
 if __name__ == '__main__':
         app.run(debug=True)
