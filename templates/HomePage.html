@@ -47,17 +47,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="accountModalLabel">Account Details</h5>
-                <button type="button" class="btn-close" ></button>
+                <h5 class="modal-title" id="accountModalLabel">Create Account</h5>
             </div>
             <div class="modal-body">
                 <!-- Dynamically populate modal content -->
-                {% if cards %}
-                <p>Account Type: 360 Checkings</p>
-                <p>Available Balance: $0</p>
-                {% else %}
-                <p>No account details available.</p>
-                {% endif %}
+                <form> 
+                    <input type="button"  onclick="window.location.href= '{{url_for('SelectingCardType',AccountType='Credit')}}'" value="Credit" name="Credit" placeholder="Credit">
+                    <input type="button"  onclick="window.location.href= '{{url_for('SelectingCardType',AccountType='Checking/Saving')}}'" value="Checking/Saving" name="Checking/Saving" placeholder="Checking/Saving">
+                    
+                </form>
             </div>
             <div class="modal-footer">
                 <button onclick="CloseModal()" class="btn btn-secondary" >Close</button>

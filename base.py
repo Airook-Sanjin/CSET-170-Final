@@ -208,16 +208,50 @@ def UserPage():
     except Exception as e:
         print(f"YOU FAIL: {e}")
         return render_template("HomePage.html",Cards = Cards)
-# ------------------------OPENNING AN ACCOUNT(CARD)------------
-@app.route("/CardCreation")
-def CreatCard():
+# ------------------------SELECTINGCARDTYPE------------
+@app.route("/SelectingCardType")
+def SelectingCardType():
+    AccountType = request.args.get("AccountType")
     try:
         print("ENTERING CARD CREATION")
-        return render_template("CreateCard.html")
+        return render_template("SelectCardType.html",AccountType = AccountType)
+    except Exception as  e:
+        print(f"ERROR: {e} ")
+        return render_template("SelectCardType.html")
+
+# ----------------------CARDCREATION--------------------
+@app.route("/CreateCard",methods=["GET"])
+
+def CardCreate():
+    g.user = session["User"] # Makes UserName availabe on current request for template
+    CardType = request.args.get("CardType")
+    try:
+        UserInfo = conn.execute(text("""
+                                    SELECT CONCAT(repeat('*',length(cia.SSN)-4),RIGHT(cia.SSN,4)) AS SSN,
+                                    Concat(cia.first_name,' ', cia.last_name) as 'FullName', cia.address AS Address, cia.phone_number AS 'PhoneNumber'
+                                    FROM user AS u JOIN create_info_account as cia WHERE u.SSN = cia.SSN AND cia.username = :username"""),{"username":g.user["Name"]}).mappings().fetchone()
+        print(UserInfo["SSN"])
+        print("ENTERING CARD CREATION")
+        return render_template("CreateCard.html",UserInfo=UserInfo,CardType=CardType)
     except Exception as  e:
         print(f"ERROR: {e} ")
         return render_template("CreateCard.html")
+@app.route("/CreateCard",methods=["POST"])
 
+def CardSend():
+    g.user = session["User"] # Makes UserName availabe on current request for template
+    CardType = request.args.get("CardType")
+    try:
+        UserInfo = conn.execute(text("""
+                                    SELECT CONCAT(repeat('*',length(cia.SSN)-4),RIGHT(cia.SSN,4)) AS SSN,
+                                    Concat(cia.first_name,' ', cia.last_name) as 'FullName', cia.address AS Address, cia.phone_number AS 'PhoneNumber'
+                                    FROM user AS u JOIN create_info_account as cia WHERE u.SSN = cia.SSN AND cia.username = :username"""),{"username":g.user["Name"]}).mappings().fetchone()
+        print(UserInfo["SSN"])
+        print("CardCreated")
+        return render_template("CreateCard.html",UserInfo=UserInfo,CardType=CardType)
+    except Exception as  e:
+        print(f"ERROR: {e} ")
+        return render_template("CreateCard.html")
 # -----------------VIEW ACCOUNT --------------------
 @app.route("/ViewAccount")
 def getViewAcc():
