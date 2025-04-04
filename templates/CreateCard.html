@@ -7,9 +7,14 @@
     <p>{{UserInfo["Address"]}}</p>
     <p>{{UserInfo["PhoneNumber"]}}</p>
     <p>{{UserInfo["SSN"]}}</p>
-    <form action="/CreateCard">
+    {% if Error %}
+    <p>{{Error}}</p>
+    {% else %}
+    <p>{{Success}}</p>
+    {%endif%}
+    <form action="{{url_for('CardSend')}}" method="POST">
         <input type="hidden" name="Cardtype" value="{{CardType}}">
-    <input type="submit"name="CreateCard"/>
+    <input type="submit"name="CreateCard" value="Create Card"/>
     </form>
     <buton>Cancel</button>
 </div>

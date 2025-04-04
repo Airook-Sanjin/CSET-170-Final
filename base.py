@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, g
 from sqlalchemy import create_engine, text, update, Row
 import secrets 
 from random import randint
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(15) # Generates and sets A secret Key for session with the secrets module
@@ -14,14 +15,34 @@ def GenerateBankNum():
     SSN = request.form.get("SSN")
     BankAccNUm = randint(100000000000000,99999999999999999)
     print(BankAccNUm)
-    if conn.execute(text("""select bank_acc_num 
-                            from user 
-                            where bank_acc_num like (:BankAccNum);"""),{"BankAccNum":BankAccNUm}).fetchone() is not None:
+    if conn.execute(text("""
+        SELECT bank_acc_num 
+        FROM user 
+        WHERE bank_acc_num LIKE (:BankAccNum);"""),{"BankAccNum":BankAccNUm}).fetchone() is not None:
         print("Bank Acc NUm Already assigned to another user")
         GenerateBankNum()
     else:
         return BankAccNUm
-
+def GenerateCardNum():
+    SSN = request.form.get("SSN")
+    CardNum= randint(1000000000000000,9999999999999999)
+    print(CardNum)
+    if conn.execute(text("""
+        Select card_number
+        FROM credit_debit_card
+        WHERE card_number like(:CardNum)"""),{"CardNum": CardNum}).fetchone() is not None: # Checks if the bank number is already in DB
+        print("Card Number is already assigned to another user")
+        GenerateCardNum()
+    else:
+        return CardNum
+def GenerateCVV():
+    CVV = randint(100,999) # Generates a random 3-Digit Number
+    print(f"CVV : {CVV}")
+    return CVV
+def GenerateDate():
+    Date = datetime.now() # gets current date
+    ExpiryDate = Date.replace(year=Date.year+4) # Adds 4 to the year
+    return ExpiryDate.strftime('%Y-%m-%d') # Puts it in a format that is acceptable for DataType: Date
 # -----------------------------
 # ----------------------Before each load------------------------------------
 @app.before_request # Before each request it will look for the values below
@@ -219,31 +240,45 @@ def CardCreate():
     CardType = request.args.get("CardType")
     try:
         UserInfo = conn.execute(text("""
-                                    SELECT CONCAT(repeat('*',length(cia.SSN)-4),RIGHT(cia.SSN,4)) AS SSN,
-                                    Concat(cia.first_name,' ', cia.last_name) as 'FullName', cia.address AS Address, cia.phone_number AS 'PhoneNumber'
-                                    FROM user AS u JOIN create_info_account as cia WHERE u.SSN = cia.SSN AND cia.username = :username"""),{"username":g.user["Name"]}).mappings().fetchone()
-        print(UserInfo["SSN"])
-        print("ENTERING CARD CREATION")
+            SELECT CONCAT(repeat('*',length(cia.SSN)-4),RIGHT(cia.SSN,4)) AS SSN,
+            Concat(cia.first_name,' ', cia.last_name) as 'FullName', cia.address AS Address, cia.phone_number AS 'PhoneNumber'
+            FROM user AS u JOIN create_info_account as cia WHERE u.SSN = cia.SSN AND cia.username = :username"""),
+            {"username":g.user["Name"]}).mappings().fetchone() # Gets User Info
+        print(UserInfo["SSN"]) # FOR DEBUGGING
+        print("ENTERING CARD CREATION") # FOR DEBUGGING
         return render_template("CreateCard.html",UserInfo=UserInfo,CardType=CardType)
     except Exception as  e:
         print(f"ERROR: {e} ")
         return render_template("CreateCard.html")
+    
 @app.route("/CreateCard",methods=["POST"])
-
 def CardSend():
+    print('Creating CARD')
     g.user = session["User"] # Makes UserName availabe on current request for template
-    CardType = request.args.get("CardType")
+    
     try:
         UserInfo = conn.execute(text("""
-                                    SELECT CONCAT(repeat('*',length(cia.SSN)-4),RIGHT(cia.SSN,4)) AS SSN,
-                                    Concat(cia.first_name,' ', cia.last_name) as 'FullName', cia.address AS Address, cia.phone_number AS 'PhoneNumber'
-                                    FROM user AS u JOIN create_info_account as cia WHERE u.SSN = cia.SSN AND cia.username = :username"""),{"username":g.user["Name"]}).mappings().fetchone()
-        print(UserInfo["SSN"])
-        print("CardCreated")
-        return render_template("CreateCard.html",UserInfo=UserInfo,CardType=CardType)
+            SELECT u.bank_acc_num as BankAccNum,cia.SSN AS SSN,
+            Concat(cia.first_name,' ', cia.last_name) as 'FullName', 
+            cia.address AS Address, cia.phone_number AS 'PhoneNumber'
+            FROM user AS u JOIN create_info_account as cia WHERE u.SSN = cia.SSN AND cia.username = :username"""),
+            {"username":g.user["Name"]}).mappings().fetchone() # GEts User Info
+        
+        conn.execute(text("""
+            INSERT INTO credit_debit_card
+            (name,card_number,ccv,expiry,bank_acc_num,status,type)
+            Values
+            (:name,:cardNumber,:CVV,:expiry,:BankAccNum,:status,:type)"""),
+            {"name":request.form.get('Cardtype'),"cardNumber": GenerateCardNum(),
+            "CVV":GenerateCVV(),"expiry":GenerateDate(),"BankAccNum":UserInfo["BankAccNum"],
+            "status":1,"type":request.form.get('Cardtype')}) #Inserts the new card info into the db
+        print(UserInfo["SSN"]) #FOR DEBUGGING PURPOSES
+        print("CardCreated") #FOR DEBUGGING PURPOSES
+        conn.commit() # Commits DB
+        return render_template("CreateCard.html",Error= None,Success = 'Card Created',UserInfo=UserInfo,CardType=request.form.get('Cardtype'))
     except Exception as  e:
         print(f"ERROR: {e} ")
-        return render_template("CreateCard.html")
+        return render_template("CreateCard.html",Error="Card Not Created",Success=None,UserInfo=UserInfo,CardType=request.form.get('Cardtype'))
 # -----------------VIEW ACCOUNT --------------------
 @app.route("/ViewAccount")
 def getViewAcc():
