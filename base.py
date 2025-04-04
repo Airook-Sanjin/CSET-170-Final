@@ -208,19 +208,28 @@ def AdminPOST():
 # -----------------USER HOMEPAGE --------------------
 @app.route("/Homepage")
 def UserPage():
-    
     try:
-        Cards = conn.execute(text("""SELECT * FROM credit_debit_card """)).mappings().fetchmany()
-        print(Cards)
-        if Cards==[]:
-            Cards = False
-        else:
-            Cards="1Card"
-        return render_template("HomePage.html",Cards = Cards)
+        g.User = session["User"]
+        
+        # Fetch card details for the logged-in user
+        cards = conn.execute(text("""
+            SELECT ccc.card_id, ccc.name AS card_name, ccc.card_number, ccc.balance
+            FROM credit_debit_card AS ccc
+            JOIN user AS u
+            ON ccc.bank_acc_num = u.bank_acc_num
+            WHERE u.username = :username;
+        """), {"username": g.User["Name"]}).mappings().fetchall()
+        
+        # Debugging: Print card details
+        for card in cards:
+            print(f"Card ID: {card['card_id']}, Card Name: {card['card_name']}, Balance: {card['balance']}")
+        
+        # Pass the cards list to the template
+        return render_template("HomePage.html", cards=cards)
     
     except Exception as e:
         print(f"YOU FAIL: {e}")
-        return render_template("HomePage.html",Cards = Cards)
+        return render_template("HomePage.html", cards=[])    
 # ------------------------SELECTINGCARDTYPE------------
 @app.route("/SelectingCardType")
 def SelectingCardType():
@@ -282,11 +291,32 @@ def CardSend():
 # -----------------VIEW ACCOUNT --------------------
 @app.route("/ViewAccount")
 def getViewAcc():
-    g.User=session["User"]
-    try:
-        return render_template("ViewAccount.html")
-    except:
-        return render_template("ViewAccount.html")
+    try: 
+        g.User = session["User"]
+        card_id = request.args.get("card_id")
+        
+        # Fetch card details for the logged-in user
+        card = conn.execute(text("""
+           SELECT ccc.card_id, ccc.name AS card_name, ccc.card_number, ccc.balance
+            FROM credit_debit_card AS ccc
+            JOIN user AS u
+            ON ccc.bank_acc_num = u.bank_acc_num
+            WHERE u.username = :username AND ccc.card_id = :card_id;
+        """), {"username": g.User["Name"], "card_id": card_id}).mappings().fetchone()
+        
+         # Add the last 4 digits of the card number to each card
+        if card:
+            card = {
+                **card,
+                "last_4_digits": str(card["card_number"])[-4:]  # Extract last 4 digits  
+            }
+            
+            print(f"Card ID: {card['card_id']}, Card Name: {card['card_name']}, Balance: {card['balance']}")
+            
+        return render_template("ViewAccount.html", card=card)
+    except Exception as e:
+        print(f"Error: {e}")
+        return render_template("ViewAccount.html", card=None)
 #---------------end--------- 
 if __name__ == '__main__':
         app.run(debug=True)

@@ -16,27 +16,30 @@
 {%block body%}
 <section class="hero">
     <div class="hero-board">
-        <div class="detail-container">
-            <div class="bank-info">
-                <div class="position-info">
-                    <h1>360 Performance Savings Account</h1>
-                    <h4>360 Performance Savings...4482</h4>
-                    <h4>View Account Details</h4>
+        {% if card %}
+            <div class="detail-container">
+                <div class="bank-info">
+                    <div class="position-info">
+                        <h1>{{ card['card_name'] }}</h1>
+                        <h4>{{ card['card_name'] }}...{{ card['last_4_digits'] }}</h4>
+                        <h4>View Account Details</h4>
+                    </div>
                 </div>
-            </div>
 
-            <div class="money">
-                <div class="position-money">
-                    <h3>AVAILABLE BALANCE</h3>
-                    <h1>$240</h1>
+                <div class="money">
+                    <div class="position-money">
+                        <h3>AVAILABLE BALANCE</h3>
+                        <h1>${{ card['balance'] }}</h1>
+                    </div>
+                </div>
+                <div class="transaction-btn-div">
+                    <button class="transfer-btn">Transfer Money</button>
                 </div>
             </div>
-            <div class="transaction-btn-div">
-                <button class="transfer-btn">Transfer Money</button>
-            </div>
-        </div>
+        {% else %}
+            <p>No account details available.</p>
+        {% endif %}
     </div>
-   
 </section>
 <section class="page-container">
 
