@@ -151,6 +151,11 @@
         let modal = document.querySelector("#accountModal")
         modal.style.display="none";
     };
+
+    function redirectToUrl(button) {
+        const url = button.getAttribute('data-url');
+        window.location.href = url;
+    };
     </script>
   </body>
 </html>
