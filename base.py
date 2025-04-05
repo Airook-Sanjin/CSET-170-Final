@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
 from sqlalchemy import create_engine, text, update, Row
 import secrets 
+from jinja2 import Environment
 from random import randint
 from datetime import datetime
 import bcrypt
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(15) # Generates and sets A secret Key for session with the secrets module
+app.jinja_env.filters['number_format']= lambda value:'{:,.2f}'.format(float(value)) # Shows two devcimals
 
 conn_str = "mysql://root:cset155@localhost/bankdb" # connects to DataBase
 engine = create_engine(conn_str, echo=True, future=True) # Future =True ensures that SQLAlchemy returns the results objects, dictionary-like access
