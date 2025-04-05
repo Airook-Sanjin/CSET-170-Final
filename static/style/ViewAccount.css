@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
 .detail-container{
     display: flex;
     flex-direction: row;
@@ -37,6 +38,10 @@
 .position-info h1{
     margin: 0;
     font-size: 21px;
+    font-family: 'Inter', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
 }
 
 .money{
@@ -51,6 +56,10 @@
 .money h1{
     margin: 0;
     font-size: 70px;
+    font-family: 'Inter', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 .money h3{
     text-align: center;

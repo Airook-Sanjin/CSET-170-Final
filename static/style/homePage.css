@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 .hero{
     width: 100%;
     height: 20vh;
@@ -41,7 +44,6 @@
     flex-direction: column;
     width: 100%;
     height:100%;
-    
 }
 .account-info h2 {/*searched this*/
     overflow: hidden; /* Ensure overflowing text is hidden */
@@ -54,6 +56,11 @@
 .account-info h1, h2, h3, h4{
     text-align: start;
     margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+      
 }
 
 .view-account-button{
