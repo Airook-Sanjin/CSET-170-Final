@@ -29,11 +29,13 @@
                 <div class="money">
                     <div class="position-money">
                         <h3>AVAILABLE BALANCE</h3>
-                        <h1>${{ card['balance'] }}</h1>
+                        <h1>${{ card['balance'] | number_format }}</h1>
+
                     </div>
                 </div>
                 <div class="transaction-btn-div">
                     <button class="transfer-btn">Transfer Money</button>
+                    <button onclick="/" class ="transfer-btn"> Deposit Money</button>
                 </div>
             </div>
         {% else %}
@@ -51,7 +53,9 @@
             <div class="sub-bar-card"><h3>View Statements</h3></div>
             <div class="sub-bar-card"><h3>Account Service</h3></div>
         </div>
-        <div class="upcoming-transaction"></div>
+        <div class="upcoming-transaction">
+            <p>HEllo</p>
+        </div>
         <div class="past-transaction"></div>
     </div>
 </section>
