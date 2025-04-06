@@ -4,6 +4,7 @@ import secrets
 from jinja2 import Environment
 from random import randint
 from datetime import datetime
+import bcrypt
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(15) # Generates and sets A secret Key for session with the secrets module
@@ -68,49 +69,53 @@ def Base():
     
     return render_template("Login.html")
 
-@app.route("/", methods = ["POST"])
-
+@app.route("/", methods=["POST"])
 def LogIn():
-    
     try:
-        ValidUser = conn.execute(text("""SELECT username, password from user 
-                                          Where username = :username AND password = :Password 
-                                          UNION
-                                          SELECT username, password from admin 
-                                          WHERE username = :username AND password = :Password"""),{"username": request.form.get("username"), "Password":request.form.get("Password")}).mappings().fetchone() #Uses Mappings to convert the result in dictionaries- Uses
-        
-        result = conn.execute(text("""
-                              SELECT username,'user' AS role FROM user 
-                              WHERE username= :username AND password=:password
-                              UNION
-                              SELECT username,'admin' AS role FROM admin 
-                              WHERE username = :username AND password = :password"""),{"username": ValidUser["username"], "password":ValidUser["password"]}).mappings().fetchone()
-        print(result["username"])
-        if result: #checks if user exists
-            role = result["role"]
-            
-            session["User"] = {"Name":result["username"],"Role":role} # Storing User in SessionStorage to see across mutliple requests
-            
-            g.user = session["User"]# Makes UserName availabe on current request for template
-            
-            if result["role"] == "admin":
-                session["Admin"] = True # Storing Admin in SessionStorage to see across mutliple requests
-                
-                g.Admin = True # Makes Admin availabe on current request for template
-                
-                return redirect(url_for("Admin")) # Looks for the function named "Admin" then finds the route associated with that function and generates the URL
+        # Fetch the user credentials from the database
+        credentials = conn.execute(text("""
+            SELECT username, password FROM user 
+            WHERE username = :username
+            UNION
+            SELECT username, password FROM admin 
+            WHERE username = :username
+        """), {"username": request.form.get("username")}).mappings().fetchone()
+
+        if credentials:
+            # Verify the password
+            input_password = request.form.get("Password")
+            stored_password = credentials["password"]
+
+            if bcrypt.checkpw(bytes(input_password, encoding="utf-8"), bytes(stored_password, encoding="utf-8")):
+                # Fetch user role
+                result = conn.execute(text("""
+                    SELECT username, 'user' AS role FROM user 
+                    WHERE username = :username
+                    UNION
+                    SELECT username, 'admin' AS role FROM admin 
+                    WHERE username = :username
+                """), {"username": credentials["username"]}).mappings().fetchone()
+
+                role = result["role"]
+                session["User"] = {"Name": result["username"], "Role": role}
+                g.user = session["User"]
+
+                if role == "admin":
+                    session["Admin"] = True
+                    g.Admin = True
+                    return redirect(url_for("Admin"))
+                else:
+                    session["Admin"] = False
+                    g.Admin = False
+                    return redirect(url_for("UserPage"))
             else:
-                session["Admin"] =False # Storing Admin in SessionStorage to see across mutliple requests
-                
-                g.Admin = False # Makes Admin availabe on current request for template
-                
-                return redirect(url_for("UserPage")) # Looks for the function named "UserPage" then finds the route associated with that function and generates the URL
+                return render_template("Login.html", error="Invalid username or password.", success=None)
         else:
-            return render_template("Login.html", error = "An error occured please try again",success = None)
-        
+            return render_template("Login.html", error="Invalid username or password.", success=None)
     except Exception as e:
-        print(f"Error: {e}") 
-        return render_template("Login.html", error = "User or password is not correct", success = None)
+        print(f"Error: {e}")
+        return render_template("Login.html", error="An error occurred. Please try again.", success=None)
+    
 #--------------Create Account--------------
 @app.route("/Register", methods = ['GET'])
 def getAccount():
@@ -129,6 +134,10 @@ def createAccount():
     password = request.form.get("password")
     
     try:
+        # Hash the password
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(bytes(password, encoding="utf-8"), salt)
+       
         conn.execute(text("""INSERT INTO create_info_account (first_name, last_name, SSN, phone_number, address, username, password )
                             VALUES (:first_name, :last_name, :SSN, :phone_number, :address, :username, :password)"""),
                         {"first_name": first_name,
@@ -137,11 +146,11 @@ def createAccount():
                             "phone_number": phone_number,
                             "address": address,
                             "username": username,
-                            "password": password}) #Insert into DB-User Table
+                            "password": hashed_password.decode("utf-8")}) #Insert into DB-User Table
         
         conn.execute(text("""INSERT INTO admin (SSN)
                             VALUES (:SSN)"""),
-                        {"SSN": SSN}) #Insert into DB-User Table
+                        {"SSN": SSN}) #Insert into DB-admin Table
         
         conn.commit()
         return render_template("Register.html", error = None, success = "Successfull")
