@@ -300,15 +300,45 @@ def CardSend():
         print(f"ERROR: {e} ")
         return render_template("CreateCard.html",Error="Card Not Created",Success=None,UserInfo=UserInfo,CardType=request.form.get('Cardtype'))
 # -----------------VIEW ACCOUNT --------------------
-@app.route("/ViewAccount")
+@app.route("/ViewAccount", methods=["GET"])
 def getViewAcc():
     try: 
         g.User = session["User"]
         card_id = request.args.get("card_id")
         
+        AllAccounts = conn.execute(text("""
+            SELECT ccc.card_id as CardID,u.username as username, ccc.name AS card_name, ccc.card_number as CardNum, u.bank_acc_num as BankAccNum
+            FROM credit_debit_card AS ccc
+            JOIN user AS u
+            ON ccc.bank_acc_num = u.bank_acc_num
+            WHERE u.username <> :username;
+        """), {"username": g.User["Name"]}).mappings().fetchall()
+        if AllAccounts:
+            AllAccounts = [
+                {**account,
+                "last_4_digits": str(account["CardNum"])[-4:]}
+                for account in AllAccounts# Extract last 4 digits  
+            ]
+            print(f"AA: {AllAccounts}")
+        #Fetch all Card ACCOUNTS of Specific User
+        ListofCards = conn.execute(text("""
+            SELECT ccc.card_id, ccc.name AS card_name, ccc.card_number as card_number, ccc.balance
+            FROM credit_debit_card AS ccc
+            JOIN user AS u
+            ON ccc.bank_acc_num = u.bank_acc_num
+            WHERE u.username = :username;
+        """), {"username": g.User["Name"]}).mappings().fetchall()
+        
+        if ListofCards:
+            ListofCards = [
+                {**Loc,
+                "last_4_digits": str(Loc["card_number"])[-4:]}
+                for Loc in ListofCards# Extract last 4 digits  
+            ]
+            print(f'LLOC: {ListofCards}')
         # Fetch card details for the logged-in user
         card = conn.execute(text("""
-           SELECT ccc.card_id, ccc.name AS card_name, ccc.card_number, ccc.balance
+           SELECT ccc.card_id, ccc.name AS card_name, ccc.card_number as card_number, ccc.balance,u.bank_acc_num as BAN
             FROM credit_debit_card AS ccc
             JOIN user AS u
             ON ccc.bank_acc_num = u.bank_acc_num
@@ -321,14 +351,72 @@ def getViewAcc():
                 **card,
                 "last_4_digits": str(card["card_number"])[-4:]  # Extract last 4 digits  
             }
+        AllTransaction =conn.execute(text("""
+            SELECT date_of_transaction as DATE, transaction_type as Type, bank_acc_num as Sender, transaction_status as Status, amount,rec_bank_acc_num AS RBAN FROM transactions
+            WHERE id_to=:UserID and rec_bank_acc_num= :BAN"""),
+            {"UserID":card['card_number'],"BAN":card['BAN']}).mappings().fetchall()
+        if AllTransaction:
+            AllTransaction = [
+                {**Transaction,
+                "last_4_digits": str(Transaction["RBAN"])[-4:]}
+                for Transaction in AllTransaction# Extract last 4 digits  
+            ]
+        print(AllTransaction)
+        print(f"Card ID: {card['card_id']}, Card Name: {card['card_name']}, Balance: {card['balance']}")
+        
             
-            print(f"Card ID: {card['card_id']}, Card Name: {card['card_name']}, Balance: {card['balance']}")
-            
-        return render_template("ViewAccount.html", card=card)
+        return render_template("ViewAccount.html", card=card,Accounts = ListofCards,AllAccounts=AllAccounts,AllTransaction=AllTransaction)
     except Exception as e:
         print(f"Error: {e}")
-        return render_template("ViewAccount.html", card=None)
-#---------------end--------- 
+        return render_template("ViewAccount.html", card=None, Accounts = None,AllAccounts=None)
+
+@app.route("/ViewAccount", methods=["POST"])
+def TransferMoney():
+    try:
+        g.User = session["User"]
+        card_id = request.args.get("card_id")
+        
+        
+        # Fetch card details for the logged-in user
+        card = conn.execute(text("""
+           SELECT ccc.card_id as CardID, ccc.name AS card_name, ccc.card_number as card_number, ccc.balance,u.bank_acc_num as BAN
+            FROM credit_debit_card AS ccc
+            JOIN user AS u
+            ON ccc.bank_acc_num = u.bank_acc_num
+            WHERE u.username = :username AND ccc.card_id = :card_id;
+            
+        """), {"username": g.User["Name"], "card_id": card_id}).mappings().fetchone()
+        # print(f"ALLACC {AllAccounts}\nLOC {ListofCards}\n Card{card}")
+       # Inserts Transaction detail
+        conn.execute(text("""
+            INSERT INTO transactions 
+            (amount,id_to,id_from,transaction_type, bank_acc_num,rec_bank_acc_num,transaction_status)
+            VALUES 
+            (:Amount,:IdTo,:IdFrom,:TransactionType,:BankAccNum,:RecBankAccNum,"completed")"""),
+            {"Amount":request.form.get("Amount"),"IdTo":request.form.get("TransferTo"),"IdFrom":card["card_number"],
+            "TransactionType":"Deposit","BankAccNum":card['BAN'],"RecBankAccNum": request.form.get("BankAccNum")})
+       
+       # updates Sender's Balance
+        conn.execute(text("""
+            Update credit_debit_card
+            SET balance = balance - :NewBalance
+            where bank_acc_num = :BankAccNum and card_id= :CardID"""),
+            {"BankAccNum":card['BAN'],"CardID":card['CardID'],"NewBalance": request.form.get("Amount")})
+       
+       
+        # updates reciever's Balance
+        conn.execute(text("""
+            Update credit_debit_card
+            SET balance = balance + :NewBalance
+            where bank_acc_num = :BankAccNum and card_number= :CardNum"""),
+            {"BankAccNum":request.form.get("BankAccNum"),"CardNum":request.form.get("TransferTo"),"NewBalance": request.form.get("Amount")})
+        
+        conn.commit() # Commits DB
+        return redirect(url_for("getViewAcc", card_id=card_id))
+    except Exception as e:
+        print(f"Error: {e}")
+        return redirect(url_for("getViewAcc", card_id=card_id))
+  #---------------end--------------  
 if __name__ == '__main__':
         app.run(debug=True)
         
