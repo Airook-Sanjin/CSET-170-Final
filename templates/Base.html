@@ -156,6 +156,21 @@
         const url = button.getAttribute('data-url');
         window.location.href = url;
     };
+    function GetBankNum(Select){
+                        const selectedOption = Select.options[Select.selectedIndex];
+                        const bankInput = document.getElementById("BankAccNum");
+    if (selectedOption && selectedOption.dataset.banknum) {
+        bankInput.value = selectedOption.dataset.banknum;
+        console.log('Bank number set:', bankInput.value);
+    };
+    
+  }
+  document.addEventListener('DOMContentLoaded', function() {
+    const select = document.getElementById('TransferTo');
+    if (select && select.options.length > 0) {
+        GetBankNum(select);
+    }
+});
     </script>
   </body>
 </html>
