@@ -11,23 +11,8 @@
         height: 78vh;
         margin-bottom: 2%;
     }
-    .Transfer.modal-content{
-        height:90vh;
-        width:50vw;
-    }
-    .Transfer.modal-body{
-        height:80vh;
-    }
-    .Transfer.modal-dialog{
-        top:0;
-        left:30rem;
 
-    }
-    #TransferForm{
-        display: flex;
-        flex-direction: column;
-        height:60%;
-        }
+ 
 </style>
 {% extends 'Base.html' %}
 {%block body%}
@@ -51,9 +36,7 @@
                     </div>
                 </div>
                 <div class="transaction-btn-div">
-
                     <button onclick="OpenModal()" class="transfer-btn">Transfer Money</button>
-
                 </div>
             </div>
         {% else %}
@@ -84,7 +67,6 @@
                 {% elif AllTransaction == [] %}
             {% endif %}
         </div>
-        <div class="past-transaction"></div>
     </div>
     
 </section>
@@ -92,7 +74,7 @@
     <div class="Transfer modal-dialog">
         <div class="Transfer modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="accountModalLabel">Transfer Money</h5>
+                <h5 class="modal-title" id="accountModalLabel" style="font-size: 20px;">Transfer Money</h5>
             </div>
             <div class="Transfer modal-body">
                 <!-- Dynamically populate modal content -->
@@ -126,8 +108,9 @@
                 </form>
                 
             </div>
-            <div class="modal-footer">
-                <button onclick="CloseModal()" class="btn btn-secondary" >Close</button>
+            <div class="modal-header">
+                <h5 class="modal-title" id="accountModalLabel" style="font-size: 20px;">Transfer Money</h5>
+                <button onclick="CloseModal()" class="close-btn" aria-label="Close">&times;</button>
             </div>
         </div>
     </div>
