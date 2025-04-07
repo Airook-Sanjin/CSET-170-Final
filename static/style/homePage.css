@@ -113,7 +113,7 @@
     transform: translate(-50%, 0);
     width: 50%;
     max-width: 600px; 
-    height: auto;
+    height: 50%;
     max-height: 80vh;
     overflow-y: auto;
 }
@@ -123,25 +123,28 @@
     padding: 20px;
     border-radius: 10px;
     width: 100%; 
-    height: auto; 
+    height: 100%; 
     text-align: center;
     box-shadow: -5px 10px 40px hsla(0, 0%, 0%, 0.5);
     animation: fadeIn 0.3s ease-in-out; 
+}
+.modal-body{
+    height: 50%
 }
 
 .Form-Container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap:1rem;
     align-items: center;
-    height: auto;
+    height: 20%;
     gap: 2rem; 
 }
 
 .btn {
     padding: 15px 25px; 
-    width: 80%; 
-    background-color: var(--Tertiary);
+    width: 50%; 
+    background-color: var(--Secondary);
     color: var(--FONT);
     border: none;
     border-radius: 8px; 
@@ -152,33 +155,18 @@
 }
 
 .btn:hover {
-    background-color: hsl(25, 97%, 73%);
+    background-color: var(--Tertiary);
     transform: translateY(-3px); 
 }
 
-.btn-secondary {
-    padding: 15px 25px;
-    background-color: var(--Secondary);
-    color: var(--FONT);
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: var(--BoxShadow);
-    font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
 
-.btn-secondary:hover {
-    background-color: black;
-    transform: translateY(-3px);
-}
 
 
 
 /* select card type css */
 
 
-/* General Container Styling */
+
 /* General Container Styling */
 .Container {
     width: 60%;

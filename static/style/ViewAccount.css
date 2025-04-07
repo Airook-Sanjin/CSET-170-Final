@@ -182,7 +182,7 @@
 
 /* Modal Content */
 .Transfer.modal-content {
-    height: 67vh;
+    height: 83vh;
     width: 40vw; /* Make the modal thinner */
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
@@ -196,21 +196,21 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 0px;
     height: 100%; 
-    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+    /* overflow-y: auto; Enable vertical scrolling if content exceeds height */
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 /* Modal Dialog */
 .Transfer.modal-dialog {
     position: absolute;
-    margin: 20px auto;
-    top: 10%;
-    left: 0;
-    right: 0;
-    transform: none;
+    display: flex;
+    justify-content: center;
+    
+    height:100vh;
     max-width: 100%;
+    overflow-y: visible;
 }
 
 /* Transfer Form */
