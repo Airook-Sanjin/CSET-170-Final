@@ -97,7 +97,7 @@
                         {% for Accs in AllAccounts %}
                            
                             <option  data-banknum="{{Accs['BankAccNum']}}" value="{{Accs['CardNum']}}">
-                                {{Accs['BankAccNum']}}{{Accs['username']}}..{{Accs["last_4_digits"]}}
+                                {{Accs['username']}}..{{Accs["last_4_digits"]}}
                             </option>
                         {% endfor %}
                     {% endif %}

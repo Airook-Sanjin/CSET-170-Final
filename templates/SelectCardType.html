@@ -6,14 +6,15 @@
 {% block body %}
 {% if AccountType == 'Checking/Saving' %}
 <div Class = "Container">
-    <div Class="">
-        <h2>For your everyday banking needs</h2>
+    <div Class="head">
+        <h1>For your everyday banking needs</h1>
 
     </div>
 <section class = "Checking AccountContainer">
     <h1>Checking Accounts</h1>
-    <p>For Your everyday banking needs- no minimun required</p>
+    <p>For Your everyday banking needs- no minimum required</p>
 <div class = "Card">
+    <div class="CardContent">
     <h3>360 Checking saving</h3>
     <h4>Pay bills, make deposits, and transfer money -all without the extra fees</h4>
     <ul>
@@ -23,12 +24,14 @@
     </ul>
     <button class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = '360 Checking Saving')}}'"> Open account</button>
 </div>
+</div>
 </section>
 
 <section class = " Saving AccountContainer">
     <h1>Savings Accounts</h1>
-    <p>For Your everyday banking needs- no minimun required</p>
+    <p>For Your everyday banking needs- no minimum required</p>
 <div class = "Card">
+    <div class="CardContent">
     <h3>360 Performance Saving</h3>
     <p>A fee-free savings account you can open in about 5 minutes</p>
     <ul>
@@ -37,14 +40,16 @@
         <li>24/7 mobile banking on the app</li>
     </ul>
     <button  class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = '360 Performance Savings')}}'" class="OpenAccount button"> Open account</button>
+</div>
 </div>
 </section>
 </div>
 {% else %}
 <section class = " Credit AccountContainer">
     <h1>Credit Accounts</h1>
-    <p>For Your everyday banking needs- no minimun required</p>
+    <p>For Your everyday banking needs- no minimum required</p>
 <div class = "Card">
+    <div class="CardContent">
     <h3>360 Performance Saving</h3>
     <p>A fee-free savings account you can open in about 5 minutes</p>
     <ul>
@@ -53,6 +58,7 @@
         <li>24/7 mobile banking on the app</li>
     </ul>
     <button  class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = '360 Performance Savings')}}'" class="OpenAccount button"> Open account</button>
+</div>
 </div>
 </section>
 </div>
