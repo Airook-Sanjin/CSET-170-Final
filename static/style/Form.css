@@ -1,15 +1,38 @@
 
-.Account-Container{
+.AccountContainer{
     display: flex;
     height:100vh;
     width:100%;
     justify-content: center;
     align-items: center;
+    gap:2rem;
 }
-.Container{
+.infoContainer{
+    
     padding: 1rem;
-    width:fit-content;
+    width:20%;
     height:fit-content;
     box-shadow: var(--Shadow) ;
     border-radius: 10px;
+    
+}
+.infoContainer form{
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.input_submit {
+    width: 80%;
+    height: 8vh;
+    border-radius: 7px;
+    background-color: var(--Secondary);
+    color:var(--FONT);
+    font-size: 20px;
+    align-self: center;
+    cursor: pointer;
+}
+.input_submit:hover{
+    background-color: var(--Tertiary);
+    box-shadow:  var(--InnerShadow);
 }

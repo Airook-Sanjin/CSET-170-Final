@@ -107,7 +107,7 @@ header button {
 }
 header button:hover{
   background-color: var(--Tertiary);
-  
+  color:white ;
   transition: .2s ease-in-out;
 }
 header button:active{

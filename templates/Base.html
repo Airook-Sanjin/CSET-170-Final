@@ -17,9 +17,9 @@
           <p>PyBank</p>
         </div>
           <ul class="barItem">
-            <li><button id="ViewAccounts" onclick="window.location.href = '/Homepage'">HOME PAGE</button></li>
+            <li><button id="ViewAccounts" onclick="window.location.href = '/Homepage'">HOMEPAGE</button></li>
            {%if g.Admin %}
-            <li><button id="ViewAccounts" onclick="window.location.href = '/Admin'">Pending Accounts</button></li>
+            <li><button id="ViewAccounts" onclick="window.location.href = '{{url_for('Admin')}}'">Pending Accounts</button></li>
             {%else%}
             {%endif%}
             
