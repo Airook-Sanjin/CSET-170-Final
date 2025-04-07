@@ -32,7 +32,7 @@ align-items: center;
 .logo {
   
   font-size: 3rem;
-  color: white;
+  color: var(--Secondary);
 }
 
 .Logo-Container{
@@ -81,7 +81,7 @@ header li {
   padding:.5rem;
   width:50px;
   height:50px;
-  color: white;
+  color: var(--Secondary);
 }
 .Profile:hover{
   color:black;
@@ -102,7 +102,7 @@ header button {
   border: none;
   border-radius: 5px;
   margin-left: 10px;
-  background-color: white;
+  background-color: var(--Secondary);
   box-shadow: var(--BoxShadow)
 }
 header button:hover{
