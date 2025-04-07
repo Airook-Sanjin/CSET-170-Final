@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
 .detail-container {
     display: flex;
     flex-direction: row; 
@@ -303,18 +304,64 @@
     height: 100%;
     width: 100%;
 }
-.card{
+.select-card{
+    background-color: hsl(0,0%,95%);
     display:flex;
     flex-direction: column;
-    width:20%;
+    width:25%;
     height: 100%;
-    box-shadow: var(--Shadow);
+    box-shadow: var(--DropShadow);
     border-radius: 10px;
+    gap:15px;
+    padding: 20px;
 }
+
+.select-card h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: var(--FONT);
+}
+
+.select-card h4,
+.select-card p {
+    font-size: 16px;
+    color: var(--FONT);
+}
+
+.select-card ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.select-card ul li {
+    font-size: 14px;
+    color: var(--FONT);
+    margin-bottom: 5px;
+}
+
+
 .CardContent{
     padding:3rem;
 }
-.OpenAccount.transfer-btn{
+.OpenAccount-button{
     padding: 10px 20px;
+    align-self: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--FONT);
+    background-color: var(--Secondary);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: var(--DropShadow);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+   
+}
+.OpenAccount-button:hover{
+    background-color: var(--Tertiary);
+    transform: translateY(-3px);
+    box-shadow: var(--InnerShadow);
 }
 

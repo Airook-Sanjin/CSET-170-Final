@@ -10,8 +10,9 @@
 .infoContainer{
     
     padding: 1rem;
-    width:20%;
-    height:fit-content;
+    width:18%;
+    min-height: 30%;
+    height:60%;
     box-shadow: var(--Shadow) ;
     border-radius: 10px;
     
@@ -19,6 +20,7 @@
 .infoContainer form{
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     text-align: left;
 }
 
