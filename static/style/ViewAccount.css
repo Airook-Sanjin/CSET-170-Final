@@ -220,8 +220,8 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    width: 80%;
-    height: 60%;
+    width: 84%;
+    min-height: 60%;
     padding: 15px;
     background-color: #f9f9f9;
     border-radius: 8px;
@@ -294,6 +294,14 @@
     justify-content: space-evenly;
     background-color: white;
     min-height:80vh;
+}
+.card-container{
+    display:flex;
+    flex-direction: row;
+    /* justify-content: space-around; */
+    gap: 2rem;
+    height: 100%;
+    width: 100%;
 }
 .card{
     display:flex;
