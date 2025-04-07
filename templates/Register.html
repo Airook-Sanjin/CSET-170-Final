@@ -1,0 +1,123 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../static/style/Login.css">
+    <title>Sign Up</title>
+    <style>
+        .radio-name .input_field{
+            padding: 0;
+        }
+        .SignUpLogIn{/* for form */
+            gap:0.5rem;
+        }
+        .SignUpLogIn input{ /* for input */
+            width: 60%;
+        }
+        .input_submit{
+            width: 60%;
+        }
+    </style>
+</head>
+<body>
+    <div class="Login-Container">
+        <div class ="Welcome-Container">
+        <h1>Register Page</h1>
+        <div id="message">
+            <h3>Password must contain the following:</h3>
+            <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+            <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+            <p id="number" class="invalid">A <b>number</b></p>
+            <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+          </div>
+        {% if error %}
+        <h2> {{error}} </h2>
+        
+        {% else %}
+        <h2>{{success}}</h2>
+        {% endif %}
+    </div>
+        <form class ="SignUpLogIn"action="/Register" method="POST">
+            <input type="text" name="first_name" placeholder="First name" class="input_field"> <br>
+            <input type="text" name="last_name" placeholder="Last name" class="input_field"> <br>
+            <input type="text" name="SSN" placeholder="***-**-****" class="input_field" pattern="^\d{9}$" maxlength="9"> <br>
+            <input type="tel" name="PhoneNumber" placeholder="(123) 456-7890"required  autocomplete="tel" pattern="^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$" maxlength="14" class="input_field"> <br>
+            <input type="text" name="Address" placeholder="Enter address" autocomplete="street-address" class="input_field"> <br>
+            <input type="text" name="Username" placeholder="Username" class="input_field"> <br>
+            <input type="password" id="psw"name="password" placeholder="Password" class="input_field" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"title ="Must contain at least one number and one uppercase and lowercase letter, and at leats 8 or more characters"required> <br>
+            <input type="submit" value="Sign Up" class="input_submit">
+            <button onclick="window.location.href = '/'" class ="input_submit">Log In</button>
+        </form>
+    </div>
+    
+    <script>
+        let Welcome = document.querySelector(".Welcome-Container");
+        let invalid = document.getElementsByClassName("invalid")
+        let message = document.getElementById("message");
+        let PassInput = document.getElementById("psw");
+        const Minimum = document.getElementById("length");
+        const lower = document.getElementById("letter");
+        const Upper =document.getElementById('capital');
+        const Numb = document.getElementById('number')
+
+        document.querySelector('input[name="PhoneNumber"]').addEventListener('input', function(e) {
+        // Get just the digits
+        let cleaned = e.target.value.replace(/\D/g, '');
+            
+        // Format the number
+        if (cleaned.length >= 6) {
+            cleaned = cleaned.slice(0,10); // Limit to 10 digits
+            let formatted = `(${cleaned.slice(0,3)}) ${cleaned.slice(3,6)}-${cleaned.slice(6)}`;
+            e.target.value = formatted;
+        } else if (cleaned.length >= 3) {
+            e.target.value = `(${cleaned.slice(0,3)}) ${cleaned.slice(3)}`;
+        } else {
+            e.target.value = cleaned;
+        }
+        });
+
+
+        PassInput.addEventListener("input",() => {
+            const Pass = PassInput.value
+            Welcome.style.backgroundColor ="var(--Primary)"; 
+            message.style.display="none";
+            
+            if (/\d/.test(Pass)){
+                Numb.style.display='none'
+            }else{Numb.style.display='block'}
+            if (Pass.length > 8){
+                
+                Minimum.style.display='none';
+            } else{
+                message.style.display="block";
+                Minimum.style.display='block'
+                Welcome.style.backgroundColor ="red";
+            }
+
+            if (/[a-z]/.test(Pass)){
+                lower.style.display='none';
+            }else{
+                message.style.display="block";
+                lower.style.display='block'
+                Welcome.style.backgroundColor ="red";
+            }
+           
+            if (/[A-Z]/.test(Pass)){
+                Upper.style.display='none';
+            }else{
+                message.style.display="block";
+                Upper.style.display='block';
+                Welcome.style.backgroundColor ="red";
+            }
+            
+            
+        })
+    </script>
+</body>
+</html>
+    
+
+    

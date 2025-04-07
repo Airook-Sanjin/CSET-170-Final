@@ -1,0 +1,123 @@
+<link rel="stylesheet" href="../static/style/ViewAccount.css" />
+<style>
+  .hero {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    min-height: 30vh;
+    background-color: bisque;
+  }
+  .page-container {
+    height: 78vh;
+    margin-bottom: 2%;
+  }
+</style>
+{% extends 'Base.html' %} {%block body%}
+<section class="hero">
+  <div class="hero-board">
+    {% if card %}
+    <div class="detail-container">
+      <div class="bank-info">
+        <div class="position-info">
+          <h1>{{ card['card_name'] }}</h1>
+          <h4>{{ card['card_name'] }}...{{ card['last_4_digits'] }}</h4>
+          <h4>View Account Details</h4>
+        </div>
+      </div>
+
+      <div class="money">
+        <div class="position-money">
+          <h3>AVAILABLE BALANCE</h3>
+          <h1>${{ card['balance'] | number_format }}</h1>
+        </div>
+      </div>
+      <div class="transaction-btn-div">
+        <button onclick="OpenModal()" class="transfer-btn">
+          Transfer Money
+        </button>
+      </div>
+    </div>
+    {% else %}
+    <p>No account details available.</p>
+    {% endif %}
+  </div>
+</section>
+<section class="page-container">
+  <div class="page-container-va">
+    <div class="sub-bar">
+      <div class="sub-bar-card"><h3>Transfer Money</h3></div>
+      <div class="sub-bar-card"><h3>Automatic Savings</h3></div>
+      <div class="sub-bar-card"><h3>View Statements</h3></div>
+      <div class="sub-bar-card"><h3>Account Service</h3></div>
+    </div>
+    <div class="upcoming-transaction">
+      {% if AllTransaction %} {% for transaction in AllTransaction %}
+      <div class="Transactions-card">
+        <section class="Date">{{transaction['DATE']}}</section>
+        <section class="Description">
+          {{transaction['Type']}} from {{transaction['last_4_digits']}}
+        </section>
+        <section class="Status">{{transaction['Status']}}</section>
+        <section class="Amount">${{transaction['Amount']}}</section>
+      </div>
+      {% endfor %} {% elif AllTransaction == [] %} {% endif %}
+    </div>
+  </div>
+</section>
+<div class="modal fade" id="accountModal">
+  <div class="Transfer modal-dialog">
+    <div class="Transfer modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="accountModalLabel" style="font-size: 20px">
+          Transfer Money
+        </h5>
+      </div>
+      <div class="Transfer modal-body">
+        <!-- Dynamically populate modal content -->
+        <form
+          id="TransferForm"
+          action="{{url_for('TransferMoney', card_id=card['card_id'])}}"
+          method="POST"
+        >
+          <label for="TransferFrom"> Transfer from </label>
+          <select name="TransferFrom" id="TransferFrom">
+            {% if Accounts %} {% for Acc in Accounts %}
+            <option value="{{Acc['card_name']}}">
+              {{Acc["card_name"]}}..{{Acc["last_4_digits"]}}
+            </option>
+            {% endfor %} {% endif %}
+          </select>
+          <label for="TransferTo">Transfer to</label>
+          <select name="TransferTo" id="TransferTo" onchange="GetBankNum(this)">
+            {%if not AllAccounts %}
+            <option value="">There Are No other Accounts</option>
+            {% else %} {% for Accs in AllAccounts %}
+
+            <option
+              data-banknum="{{Accs['BankAccNum']}}"
+              value="{{Accs['CardNum']}}"
+            >
+              {{Accs['username']}}..{{Accs["last_4_digits"]}}
+            </option>
+            {% endfor %} {% endif %}
+          </select>
+          <input type="hidden" name="BankAccNum" id="BankAccNum" value="" />
+          <input
+            type="number"
+            step="0.01"
+            min="0.01"
+            name="Amount"
+            id="Amount"
+            placeholder="$0.00"
+          />
+          <input class="transfer-btn" type="submit" value="Transfer Money" />
+        </form>
+      </div>
+        <button onclick="CloseModal()" class="close-btn" aria-label="Close">
+          &times;
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

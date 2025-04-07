@@ -1,0 +1,82 @@
+<style>
+    .Welcome-bar h1{
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        font-size:3rem;
+    }
+    .Welcome-bar{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        
+    }
+    .page-container{
+        align-items: center; /* Center vertically */
+    }
+</style>
+
+{% extends 'Base.html' %}
+{%block body%}
+<section class="Welcome-bar"><h1>Welcome to PyBank</h1></section>
+<section class="page-container">
+    <div class="grid-Container">
+        {% if not cards %}
+            <div class="account-card">
+                <div class="account-info">
+                    <h2>Open an Account</h2>
+                    <h4>Explore all our products now to find an account that's right for you.</h4>
+                </div>
+                <div class="view-account-button">
+                    <button onclick="OpenModal()" class="Account-card-btn">Open A New Account</button>
+                </div>
+            </div>
+        {% else %}
+            {% for card in cards %}
+                <div class="account-card" id="card-{{ card['card_id'] }}">
+                    <div class="account-info">
+                        <h2>{{ card['card_name'] }}</h2>
+                        <h1 style="font-size: 50px; margin: 5px 0px;">${{ card['balance'] | number_format }}</h1>
+                        <h4>AVAILABLE BALANCE</h4>
+                    </div>
+                    <div class="view-account-button">
+                        <button class="Account-card-btn" onclick="window.location.href = '/ViewAccount?card_id={{ card['card_id'] }}'">View Account</button>
+                    </div>
+                </div>
+            {% endfor %}
+            <div class="account-card">
+                <div class="account-info">
+                    <h2>Open an Account</h2>
+                    <h4>Explore all our products now to find an account that's right for you.</h4>
+                </div>
+                <div class="view-account-button">
+                    <button  onclick="OpenModal()" class="Account-card-btn">Open A New Account</button>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <!-- Modal Structure -->
+<div class="modal fade" id="accountModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="accountModalLabel">Create Account</h1>
+            </div>
+            <div class="modal-body">
+                <!-- Dynamically populate modal content -->
+                <form class="Form-Container"> 
+                    <input class="btn" type="button" data-url="{{ url_for('SelectingCardType', AccountType='Credit') }}" value="Credit" name="Credit" placeholder="Credit" onclick="redirectToUrl(this)">
+                    <input class="btn" type="button" data-url="{{ url_for('SelectingCardType', AccountType='Checking/Saving') }}" value="Checking/Saving" name="Checking/Saving" placeholder="Checking/Saving" onclick="redirectToUrl(this)">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button onclick="CloseModal()" class="btn btn-secondary" >Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+
+{% endblock %}

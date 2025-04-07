@@ -1,0 +1,133 @@
+:root{
+  --FONT: #473C33;
+  --Primary:#ABC270;
+  --Secondary:#FEC868;
+  --Tertiary:#FDA769;
+  --DropShadow:6px 6px 10px hsl(217, 72%, 18%,16%),
+  -6px -6px 10px hsla(0, 0%, 99%,100%);
+
+  --InnerShadow:-2px -2px 2px #00000026,
+  2px 2px 2px hsla(0, 0%, 99%,100%);
+}
+span{
+  color:var(--Secondary);
+  font-size: xx-large;
+}
+h1 ,h2{
+  color: var(--FONT);
+}
+h1{
+  font-size:7rem;
+  margin:0;
+}
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: acumin-pro, system-ui, sans-serif;
+  margin: 0;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  font-size: 14px;
+  background-color:hsl(0, 0%, 95%);
+  align-items: start;
+  min-height: 100vh;
+  justify-items: center;
+}
+.Welcome-Container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width:65vw;
+  height:100vh;
+  background-color: var(--Primary);
+  text-align: center;
+  justify-content: center;
+}
+.Form-Container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:35vw;
+  height: 100vh;
+}
+.Login-Container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    gap: 3rem;
+    justify-content: center;
+    
+}
+
+
+.SignUpLogIn{
+    display:flex;
+    width:50% ;
+    flex-direction: column;
+    align-items: center;
+    gap:1rem;
+  }
+  .RadioInput{
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    width: 100%;
+    /* padding:0px 0px; */
+  }
+  .radio-name{
+    display: flex;
+    flex-direction: row;
+    /* width: 30%; */
+    gap:.6rem;
+  }
+  .input_field {
+    width: 100%;
+    padding: 8px 20px;
+    /* margin: 8px 0; */
+    display: inline-block;
+    border:none;
+    box-shadow: var(--DropShadow);
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: hsl(0, 0%, 95%);
+    
+  }
+  .input_field:focus{
+    outline: 1px solid hsl(0, 0%, 93%); /* Tailwind yellow-400 for example */
+    outline-offset: 2px;
+  }
+  
+  .input_submit {
+    width: 100%;
+    background-color: var(--Secondary);
+    color:var(--FONT);
+    padding: 14px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: var(--Shadow);
+  }
+  
+  .input_submit:hover {
+    background-color: var(--Tertiary);
+    box-shadow:  var(--InnerShadow);
+  }
+  #message{
+    display: flex;
+    flex-direction: column;
+    display: none;
+  }
+  .invalid{
+    display: none;
+    color:white;
+  }

@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="../static/style/Form.css">
+
+{% extends 'Base.html'%}
+{% block body %}
+<div class="AccountContainer">
+    {% for user in PendingUsers %}
+            <section class ="User infoContainer">
+                {% if user[7] == 1 %}
+                <h1 style="color: green;">Approved</h1>
+                {% else %}
+                <h1 style="color: red;">Not Approved</h1>
+                {% endif %}
+                <form action="/AdminDashboard" method="POST">
+                    <h1>{{user[2]}} {{user[3]}}</h1>
+                    <p><strong>Username :</strong> {{user[1]}}</p>
+                    <p><strong>Address :</strong> {{user[4]}}</p>
+                    <p><strong>Phone Number :</strong> {{user[5]}}</p>
+                    <p><strong>SSN :</strong> {{user[0]}}</p>
+                    <input type="hidden" name="SSN" value="{{user[0]}}">
+                    <input type="hidden" name="username" value="{{user[1]}}">
+                    <input type="hidden" name="password" value="{{user[8]}}">
+                    <input type="hidden" name="status" value="{{user[7]}}">
+                    <input class="input_submit"type="submit" name="approve" value="Approve">
+                </form>
+            </section>
+    {% endfor %} 
+</div>
+{% endblock %}

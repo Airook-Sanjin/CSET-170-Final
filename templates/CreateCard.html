@@ -1,0 +1,124 @@
+<style>
+    .body{
+        display: flex;
+        padding: 3rem 0;
+    }
+/* Card Container */
+.CardContainer {
+    background-color: hsl(210, 36%, 96%); 
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow:var(--Shadow); 
+    width: 50%;
+    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Card Type Heading */
+.CardType {
+    font-size: 32px;
+    font-weight: bold;
+    color: hsl(210, 22%, 30%); 
+    margin-bottom: 10px;
+}
+
+/* Account Info Container */
+.Account-info {
+    background-color: hsl(210, 36%, 96%); 
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Paragraph Styling */
+.Account-info p {
+    font-size: 16px;
+    color: hsl(210, 15%, 35%); 
+    margin: 5px 0;
+    line-height: 1.5;
+}
+
+.Account-info .Error {
+    color: hsl(0, 70%, 50%); 
+    font-weight: bold;
+}
+
+.Account-info .Success {
+    color: hsl(120, 40%, 40%);
+    font-weight: bold;
+}
+
+/* Form Styling */
+.Account-info form {
+    margin-top: 20px;
+}
+
+.Account-info input[type="submit"] {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: hsl(210, 50%, 40%);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.Account-info input[type="submit"]:hover {
+    background-color: hsl(210, 50%, 50%);
+    transform: translateY(-3px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Cancel Button */
+.CancelButton {
+    width: 16%;
+    align-self: center;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: hsl(0, 0%, 50%);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
+}
+
+.CancelButton:hover {
+    background-color: hsl(0, 0%, 40%);
+    transform: translateY(-3px);
+}
+</style>
+{% extends 'Base.html'%}
+{% block body %}
+<div class="body">
+<div class="CardContainer">
+    <h1 class="CardType">{{CardType}}</h1>
+    <div class="Account-info">
+        <p>Verify Your INFO</p>
+        <p>{{UserInfo["FullName"]}}</p>
+        <p>{{UserInfo["Address"]}}</p>
+        <p>{{UserInfo["PhoneNumber"]}}</p>
+        <p>{{UserInfo["SSN"]}}</p>
+        {% if Error %}
+        <p class="Error">{{Error}}</p>
+        {% else %}
+        <p class="Success">{{Success}}</p>
+        {% endif %}
+        <form action="{{url_for('CardSend')}}" method="POST">
+            <input type="hidden" name="Cardtype" value="{{CardType}}">
+            <input type="submit" name="CreateCard" value="Create Card" />
+        </form>
+        <button class="CancelButton" onclick="window.location.href='{{ url_for('UserPage') }}'">Cancel</button>
+    </div>
+</div>
+</div>
+{% endblock %}
