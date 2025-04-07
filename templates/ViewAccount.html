@@ -61,7 +61,7 @@
                     <section class="Date">{{transaction['DATE']}}</section>
                     <section class="Description">{{transaction['Type']}} from {{transaction['last_4_digits']}}</section>
                     <section class="Status">{{transaction['Status']}}</section>
-                    <section class="Amount"> {{transaction['Amount']}}</section>
+                    <section class="Amount"> ${{transaction['Amount']}}</section>
                 </div>
                 {% endfor %}
                 {% elif AllTransaction == [] %}
