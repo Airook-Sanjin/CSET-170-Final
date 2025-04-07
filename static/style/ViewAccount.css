@@ -123,6 +123,7 @@
 }
 
 
+
 /* Modal Content */
 .Transfer.modal-content {
     height: 67vh; 
@@ -226,3 +227,10 @@
 .close-btn:hover {
     color: #ff0000; /* Change color to red on hover */
 }
+
+/* ----------------SelCardType ------------------ */
+.AccountContainer{
+    background-color: aquamarine;
+    height:50vh;
+}
+
