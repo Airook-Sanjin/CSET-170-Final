@@ -4,10 +4,8 @@
 .Welcome-bar{
     width: 100%;
     height: 20vh;
-    background-color: var(--Secondary);
-    /* background-image: url(https://www.srividyatech.com/wp-content/uploads/2020/12/Python-Certification-Training-Course.jpg); */
-    background-repeat: no-repeat;
-    background-position: cover;
+    background: linear-gradient(var(--Primary), hsl(77, 40%, 70%) , hsl(0, 0%, 95%));
+    color: var(--FONT);
 }
 
 .page-container{
@@ -73,7 +71,7 @@
 }
 
 .Account-card-btn{
-    background-color: var(--Primary);
+    background-color: var(--Secondary);
     display: inline-block; /* Link behaves like a button */
     padding: 15px 20px;
     font-size: 1.125em;
@@ -91,7 +89,7 @@
 .Account-card-btn:hover{
     transform:scale(1.025);
     box-shadow: var(--Shadow);
-    background-color: hsl(77, 30%, 55%);
+    background-color: hsl(38, 99%, 74%);
     color: white;
 }
 /* --------Modal------------- */

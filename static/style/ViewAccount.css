@@ -173,6 +173,7 @@
 /*  MODAL  */
 /* ====== */
 
+
 /* Modal Content */
 .Transfer.modal-content {
     height: 67vh;
@@ -277,3 +278,34 @@
 .close-btn:hover {
     color: #ff0000; /* Change color to red on hover */
 }
+
+/* ----------------SelCardType ------------------ */
+.AccountContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background-color: white;
+    height:70vh;
+}
+.card{
+    display:flex;
+    flex-direction: column;
+    width:20%;
+    height: 65%;
+    box-shadow: var(--Shadow);
+    border-radius: 10px;
+}
+.CardContent{
+    padding:3rem;
+}
+.OpenAccount.button{
+    padding: 10px 20px;
+    /* width:20em; */
+    background-color: var(--Tertiary);
+    color:var(--FONT);
+    border:none;
+    border-radius:5px;
+    cursor: pointer;
+    box-shadow: var(--BoxShadow);
+}
+
