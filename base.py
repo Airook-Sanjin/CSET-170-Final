@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
 from sqlalchemy import create_engine, text, update, Row
+from password_strength import PasswordPolicy
 import secrets 
 from jinja2 import Environment
 from random import randint
@@ -156,7 +157,7 @@ def createAccount():
         return render_template("Register.html", error = None, success = "Successfull")
     except Exception as e:
         print(f"Error: {e}") 
-        return render_template("Register.html", error = "Failed", success = None) 
+        return render_template("Register.html", error = "ERROR!", success = None) 
         
 # -----------------ADMIN ADMINPAGE---------
 @app.route("/AdminDashboard")
@@ -353,8 +354,8 @@ def getViewAcc():
             }
         AllTransaction =conn.execute(text("""
             SELECT date_of_transaction as DATE, transaction_type as Type, bank_acc_num as Sender, transaction_status as Status, amount,rec_bank_acc_num AS RBAN FROM transactions
-            WHERE id_to=:UserID and rec_bank_acc_num= :BAN"""),
-            {"UserID":card['card_number'],"BAN":card['BAN']}).mappings().fetchall()
+            WHERE card_to=:CardNum and rec_bank_acc_num= :BAN"""),
+            {"CardNum":card['card_number'],"BAN":card['BAN']}).mappings().fetchall()
         if AllTransaction:
             AllTransaction = [
                 {**Transaction,
@@ -390,10 +391,10 @@ def TransferMoney():
        # Inserts Transaction detail
         conn.execute(text("""
             INSERT INTO transactions 
-            (amount,id_to,id_from,transaction_type, bank_acc_num,rec_bank_acc_num,transaction_status)
+            (amount,card_to,card_from,transaction_type, bank_acc_num,rec_bank_acc_num,transaction_status)
             VALUES 
-            (:Amount,:IdTo,:IdFrom,:TransactionType,:BankAccNum,:RecBankAccNum,"completed")"""),
-            {"Amount":request.form.get("Amount"),"IdTo":request.form.get("TransferTo"),"IdFrom":card["card_number"],
+            (:Amount,:CardTo,:CardFrom,:TransactionType,:BankAccNum,:RecBankAccNum,"completed")"""),
+            {"Amount":request.form.get("Amount"),"CardTo":request.form.get("TransferTo"),"CardFrom":card["card_number"],
             "TransactionType":"Deposit","BankAccNum":card['BAN'],"RecBankAccNum": request.form.get("BankAccNum")})
        
        # updates Sender's Balance

@@ -3,7 +3,11 @@
   --Primary:#ABC270;
   --Secondary:#FEC868;
   --Tertiary:#FDA769;
+  --DropShadow:6px 6px 10px hsl(217, 72%, 18%,16%),
+  -6px -6px 10px hsla(0, 0%, 99%,100%);
 
+  --InnerShadow:-2px -2px 2px #00000026,
+  2px 2px 2px hsla(0, 0%, 99%,100%);
 }
 span{
   color:var(--Secondary);
@@ -86,59 +90,21 @@ body {
     /* width: 30%; */
     gap:.6rem;
   }
-  input[type=radio]{
-    -webkit-appearance: none;
-    appearance: none;
-    margin: 0;
-    content: "";
-
-    font: inherit;
-    color: var(--FONT);
-    height:1.15em;
-    width:1.15em;
-
-    display:grid;
-    place-content: center;
-
-    border-radius: 50%;
-    border:.15em solid var(--Tertiary);
-    transform: translatey(0.195em);
-  }
-  /* --------Custom Radio Inputs------- */
-  input[type=radio]::before{
-    content: "";
-    background-color:var(--Tertiary);
-    border-radius: 50%;
-    transform: scale(0);
-    transition: .5s transform ease-in-out;
-    box-shadow: inset 1em 1em var(--Tertiary) ;
-
-    height:.65em;
-    width:.65em;
-  } 
-  input[type=radio]:checked::before{
-    transform: scale(1);
-  }
-
-  input[type=radio]:focus{
-    outline: max(2px,0.15em) solid var(--FONT);
-    outline-offset: max(2px,0.15em);
-  }
-  .radio-name:focus-within{
-    color: var(--Tertiary);
-    font-weight: bold;
-  }
-  /* ------------------CONT.Form */
-
   .input_field {
     width: 100%;
     padding: 8px 20px;
     /* margin: 8px 0; */
     display: inline-block;
-    border: 1px solid var(--FONT);
+    border:none;
+    box-shadow: var(--DropShadow);
     border-radius: 4px;
     box-sizing: border-box;
-    background-color: hsl(0, 0%, 99%);
+    background-color: hsl(0, 0%, 95%);
+    
+  }
+  .input_field:focus{
+    outline: 1px solid hsl(0, 0%, 93%); /* Tailwind yellow-400 for example */
+    outline-offset: 2px;
   }
   
   .input_submit {
@@ -149,10 +115,10 @@ body {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    box-shadow: 0px 4px 4px hsla(0, 0%, 0%, 0.188),
-      0px 12px 12px hsla(0, 0%, 0%, 0.082);
+    box-shadow: var(--Shadow);
   }
   
   .input_submit:hover {
     background-color: var(--Tertiary);
+    box-shadow:  var(--InnerShadow);
   }
