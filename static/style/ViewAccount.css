@@ -98,10 +98,15 @@
     width: 80%;
     height: 8vh;
     border-radius: 7px;
-    border: 1px solid black; 
-    background-color: transparent;
+    background-color: var(--Secondary);
+    color:var(--FONT);
     font-size: 20px;
     text-align: center;
+    cursor: pointer;
+}
+.transfer-btn:hover{
+    background-color: var(--Tertiary);
+    box-shadow:  var(--InnerShadow);
 }
 .page-container-va{
     width: 100%;
@@ -285,13 +290,13 @@
     flex-direction: column;
     justify-content: space-evenly;
     background-color: white;
-    height:70vh;
+    min-height:80vh;
 }
 .card{
     display:flex;
     flex-direction: column;
     width:20%;
-    height: 65%;
+    height: 100%;
     box-shadow: var(--Shadow);
     border-radius: 10px;
 }
