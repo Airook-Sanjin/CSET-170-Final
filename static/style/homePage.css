@@ -62,7 +62,6 @@
 }
 
 .view-account-button{
-    
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -223,6 +222,7 @@
 /* Card Styling */
 .Card {
     background-color: hsl(0, 0%, 95%);
+    min-width: 25%;
     padding: 20px;
     border-radius: 8px;
     box-shadow: var(--DropShadow);
@@ -274,4 +274,16 @@
     background-color: var(--Tertiary);
     transform: translateY(-3px);
     box-shadow: var(--InnerShadow);
+}
+
+@media (max-width: 1390px) {
+    .page-container{
+        margin: auto;
+        width: 80%;
+    }
+    .account-card {
+        width: 100%; /* Adjust width to 90% of the screen */
+        height: 180px; /* Reduce height for smaller screens */
+        padding: 10px; /* Adjust padding for a cleaner look */
+    }
 }
