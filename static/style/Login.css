@@ -122,3 +122,12 @@ body {
     background-color: var(--Tertiary);
     box-shadow:  var(--InnerShadow);
   }
+  #message{
+    display: flex;
+    flex-direction: column;
+    display: none;
+  }
+  .invalid{
+    display: none;
+    color:white;
+  }

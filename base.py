@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
 from sqlalchemy import create_engine, text, update, Row
-from password_strength import PasswordPolicy
+
 import secrets 
 from jinja2 import Environment
 from random import randint
