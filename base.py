@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, session, redirect, url_for, g
 from sqlalchemy import create_engine, text, update, Row
-
 import secrets 
 from jinja2 import Environment
 from random import randint
@@ -353,7 +352,7 @@ def getViewAcc():
                 "last_4_digits": str(card["card_number"])[-4:]  # Extract last 4 digits  
             }
         AllTransaction =conn.execute(text("""
-            SELECT date_of_transaction as DATE, transaction_type as Type, bank_acc_num as Sender, transaction_status as Status, amount,rec_bank_acc_num AS RBAN FROM transactions
+            SELECT date_of_transaction as DATE, transaction_type as Type, bank_acc_num as Sender, transaction_status as Status, Amount,rec_bank_acc_num AS RBAN FROM transactions
             WHERE card_to=:CardNum and rec_bank_acc_num= :BAN"""),
             {"CardNum":card['card_number'],"BAN":card['BAN']}).mappings().fetchall()
         if AllTransaction:
