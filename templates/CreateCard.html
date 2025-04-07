@@ -1,10 +1,14 @@
 <style>
+    .body{
+        display: flex;
+        padding: 3rem 0;
+    }
 /* Card Container */
 .CardContainer {
     background-color: hsl(210, 36%, 96%); 
     padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+    box-shadow:var(--Shadow); 
     width: 50%;
     text-align: center;
     margin: 0 auto;
@@ -95,6 +99,7 @@
 </style>
 {% extends 'Base.html'%}
 {% block body %}
+<div class="body">
 <div class="CardContainer">
     <h1 class="CardType">{{CardType}}</h1>
     <div class="Account-info">
@@ -114,5 +119,6 @@
         </form>
         <button class="CancelButton" onclick="window.location.href='{{ url_for('UserPage') }}'">Cancel</button>
     </div>
+</div>
 </div>
 {% endblock %}

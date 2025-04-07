@@ -132,6 +132,7 @@
 .Transactions-card {
     background-color: #fff;
     border-radius: 8px;
+    max-height: 30%;
     padding: 15px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -253,7 +254,7 @@
 #TransferForm .input_submit {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: var(--Secondary);
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -263,7 +264,8 @@
 }
 
 #TransferForm .input_submit:hover {
-    background-color: #0056b3;
+    background-color: var(--Tertiary);
+    box-shadow:  var(--InnerShadow);
 }
 
 /* Close Button */
@@ -303,14 +305,7 @@
 .CardContent{
     padding:3rem;
 }
-.OpenAccount.button{
+.OpenAccount.transfer-btn{
     padding: 10px 20px;
-    /* width:20em; */
-    background-color: var(--Tertiary);
-    color:var(--FONT);
-    border:none;
-    border-radius:5px;
-    cursor: pointer;
-    box-shadow: var(--BoxShadow);
 }
 
