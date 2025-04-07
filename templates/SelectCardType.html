@@ -12,50 +12,68 @@
     <section class = "Checking AccountContainer">
         <h1>Checking Accounts</h1>
         <p>Simple, fee-free checking—no minimum balance required</p>
-        <div class = "Card">
-            <h3>360 Checking®</h3>
-            <h4>Pay bills, deposit checks, and transfer money with ease—no monthly fees</h4>
-            <ul>
-                <li>No monthly fees or minimum balance requirements</li>
-                <li>Access to 24/7 mobile banking via the Capital One app</li>
-                <li>70,000+ fee-free ATMs nationwide</li>
-            </ul>
-            <button class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = '360 Checkings')}}'"> Open account</button>
+        <div class="card-container">
+            <div class = "Card">
+                <h3>360 Checking®</h3>
+                <h4>Pay bills, deposit checks, and transfer money with ease—no monthly fees</h4>
+                <ul>
+                    <li>No monthly fees or minimum balance requirements</li>
+                    <li>Access to 24/7 mobile banking via the Capital One app</li>
+                    <li>70,000+ fee-free ATMs nationwide</li>
+                </ul>
+                <button class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = '360 Checkings')}}'"> Open account</button>
+            </div>
         </div>
     </section>
 
     <section class = "Saving AccountContainer">
         <h1>Savings Accounts</h1>
         <p>Earn interest on your savings with no monthly fees or minimums</p>
-        <div class = "Card">
-            <h3>360 Performance Savings™</h3>
-            <p>Grow your savings with a competitive rate and no hidden fees</p>
-            <ul>
-                <li>Earn 3.70% APY</li> 
-                <li>No monthly fees or minimum balance requirements</li>
-                <li>Easy access through the Capital One mobile app, 24/7</li>
-            </ul>
-            <button  class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = '360 Performance Savings')}}'" class="OpenAccount button"> Open account</button>
+        <div class="card-container">
+            <div class = "Card">
+                <h3>360 Performance Savings™</h3>
+                <p>Grow your savings with a competitive rate and no hidden fees</p>
+                <ul>
+                    <li>Earn 3.70% APY</li> 
+                    <li>No monthly fees or minimum balance requirements</li>
+                    <li>Easy access through the Capital One mobile app, 24/7</li>
+                </ul>
+                <button  class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = '360 Performance Savings')}}'" class="OpenAccount button"> Open account</button>
+            </div>
         </div>
     </section>
 </div>
 {% else %}
 <div Class = "Container">
     <div>
-        <h2>Choose a credit card that fits your fincial state</h2>
+        <h2>Choose a credit card that fits your financial state</h2>
     </div>
     <section class = " Credit AccountContainer">
         <h1>Credit Cards</h1>
         <p>Credit solutions to help you build or rebuild your credit responsibly</p>
-        <div class = "Card">
-            <h3>Platinum Mastercard®</h3>
-            <p>A great card to build or strengthen your credit—with no annual fee</p>
-            <ul>
-                <li>No annual fee</li> 
-                <li>Access to CreditWise® from Capital One</li>
-                <li>Fraud coverage and $0 liability for unauthorized charges</li>
-            </ul>
-            <button  class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = 'Platinum Mastercard')}}'" class="OpenAccount button"> Open account</button>
+        <div class="card-container">
+            <div class = "Card">
+                <h3>Platinum Mastercard®</h3>
+                <p>A great card to build or strengthen your credit—with no annual fee</p>
+                <ul>
+                    <li>No annual fee</li> 
+                    <li>Access to CreditWise® from Capital One</li>
+                    <li>Fraud coverage and $0 liability for unauthorized charges</li>
+                </ul>
+                <button  class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = 'Platinum Mastercard')}}'" class="OpenAccount button"> Open account</button>
+            </div>
+            <div class = "Card">
+                <h3>Quicksilver Secured Mastercard®</h3>
+                <p>A secured card that earns unlimited cash back while helping you build credit</p>
+                <ul>
+                    <li>Earn 1.5% cash back on every purchase</li>
+                    <li>No annual fee</li>
+                    <li>Build credit with responsible card use</li>
+                    <li>Refundable security deposit required</li>
+                    <li>Access to CreditWise® to monitor your credit</li>
+                </ul>
+                <button class="OpenAccount button" onclick="window.location.href='{{url_for('CardCreate',CardType = 'Quicksilver Secured Mastercard')}}'" class="OpenAccount button"> Open account</button>
+            </div>            
         </div>
     </section>
 </div>
