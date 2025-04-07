@@ -158,5 +158,5 @@
     box-shadow: var(--BoxShadow);
 }
 .btn-secondary:hover{
-    background-color: black;
+    background-color: hsl(38, 99%, 74%);
 }
