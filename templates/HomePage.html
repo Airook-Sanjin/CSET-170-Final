@@ -1,11 +1,11 @@
 <style>
-    .hero h1{
+    .Welcome-bar h1{
         text-align: center;
         display: flex;
         flex-direction: column;
         justify-content: space-around;
     }
-    .hero{
+    .Welcome-bar{
         display: flex;
         flex-direction: column;
         justify-content: space-around;
@@ -17,7 +17,7 @@
 
 {% extends 'Base.html' %}
 {%block body%}
-<section class="hero"><h1>Welcome to PyBank</h1></section>
+<section class="Welcome-bar"><h1>Welcome to PyBank</h1></section>
 <section class="page-container">
     <div class="grid-Container">
         {% if not cards %}
@@ -27,7 +27,7 @@
                     <h4>Explore all our products now to find an account that's right for you.</h4>
                 </div>
                 <div class="view-account-button">
-                    <a type="Button" onclick="OpenModal()" class="acount-card-btn">Open A New Account</a>
+                    <button onclick="OpenModal()" class="Account-card-btn">Open A New Account</button>
                 </div>
             </div>
         {% else %}
@@ -39,11 +39,19 @@
                         <h4>AVAILABLE BALANCE</h4>
                     </div>
                     <div class="view-account-button">
-                        <button class="acount-card-btn" onclick="window.location.href = '/ViewAccount?card_id={{ card['card_id'] }}'">View Account</button>
+                        <button class="Account-card-btn" onclick="window.location.href = '/ViewAccount?card_id={{ card['card_id'] }}'">View Account</button>
                     </div>
                 </div>
             {% endfor %}
-            
+            <div class="account-card">
+                <div class="account-info">
+                    <h2>Open an Account</h2>
+                    <h4>Explore all our products now to find an account that's right for you.</h4>
+                </div>
+                <div class="view-account-button">
+                    <button  onclick="OpenModal()" class="Account-card-btn">Open A New Account</button>
+                </div>
+            </div>
         {% endif %}
     </div>
     <!-- Modal Structure -->
@@ -51,13 +59,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="accountModalLabel">Create Account</h5>
+                <h1 class="modal-title" id="accountModalLabel">Create Account</h1>
             </div>
             <div class="modal-body">
                 <!-- Dynamically populate modal content -->
-                <form> 
-                    <input type="button" data-url="{{ url_for('SelectingCardType', AccountType='Credit') }}" value="Credit" name="Credit" placeholder="Credit" onclick="redirectToUrl(this)">
-                    <input type="button" data-url="{{ url_for('SelectingCardType', AccountType='Checking/Saving') }}" value="Checking/Saving" name="Checking/Saving" placeholder="Checking/Saving" onclick="redirectToUrl(this)">
+                <form class="Form-Container"> 
+                    <input class="btn" type="button" data-url="{{ url_for('SelectingCardType', AccountType='Credit') }}" value="Credit" name="Credit" placeholder="Credit" onclick="redirectToUrl(this)">
+                    <input class="btn" type="button" data-url="{{ url_for('SelectingCardType', AccountType='Checking/Saving') }}" value="Checking/Saving" name="Checking/Saving" placeholder="Checking/Saving" onclick="redirectToUrl(this)">
                 </form>
             </div>
             <div class="modal-footer">

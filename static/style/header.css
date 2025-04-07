@@ -1,10 +1,12 @@
 :root{
-  --FONT: #473C33;
-  --Primary:#ABC270;
-  --Secondary:#FEC868;
-  --Tertiary:#FDA769;
+  --FONT: hsl(27, 16%, 24%);
+  --Primary:hsl(77, 40%, 60%);
+  --Secondary:hsl(38, 99%, 70%);
+  --Tertiary:hsl(25, 97%, 70%);
   --Shadow:28px 28px 47px hsla(217, 72%, 18%,16%),
-    -23px -23px 45px hsla(0, 0%, 100%,100%)
+    -23px -23px 45px hsla(0, 0%, 100%,100%);
+  --BoxShadow:0px 4px 4px hsla(0, 0%, 0%, 0.188),
+  0px 12px 12px hsla(0, 0%, 0%, 0.082);
 
 }
 a,a:active,a:visited{
@@ -101,15 +103,16 @@ header button {
   border-radius: 5px;
   margin-left: 10px;
   background-color: white;
-  box-shadow: 0px 4px 4px hsla(0, 0%, 0%, 0.188),
-      0px 12px 12px hsla(0, 0%, 0%, 0.082);
+  box-shadow: var(--BoxShadow)
 }
 header button:hover{
   background-color: var(--Tertiary);
+  
   transition: .2s ease-in-out;
 }
 header button:active{
   background-color: hsl(0, 0%, 80%);
+  
 }
 
 
@@ -127,14 +130,8 @@ html {
 
 body {
   font-family: acumin-pro, system-ui, sans-serif;
-/* darlin  */
   margin: auto;
   display: grid; 
-  
-/* erick */
-/*   margin: 0; */
-/*   display: grid; */
-
   grid-template-rows: auto 1fr auto;
   font-size: 14px;
   background-color:hsl(0, 0%, 95%);

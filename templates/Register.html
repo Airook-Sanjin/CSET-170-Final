@@ -28,6 +28,13 @@
         <h1>Register Page</h1>
         {% if error %}
         <h2> {{error}} </h2>
+        <div id="message">
+  <h3>Password must contain the following:</h3>
+  <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+  <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+  <p id="number" class="invalid">A <b>number</b></p>
+  <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+</div>
         {% else %}
         <h2>{{success}}</h2>
         {% endif %}
@@ -35,16 +42,25 @@
         <form class ="SignUpLogIn"action="/Register" method="POST">
             <input type="text" name="first_name" placeholder="First name" class="input_field"> <br>
             <input type="text" name="last_name" placeholder="Last name" class="input_field"> <br>
-            <input type="text" name="SSN" placeholder="SSN" class="input_field"> <br>
-            <input type="text" name="PhoneNumber" placeholder="Phone #"required class="input_field"> <br>
+            <input type="text" name="SSN" placeholder="***-**-****" class="input_field"> <br>
+            <input type="text" name="PhoneNumber" placeholder="*** -***-****"required class="input_field"> <br>
             <input type="text" name="Address" placeholder="Enter address" class="input_field"> <br>
             <input type="text" name="Username" placeholder="Username" class="input_field"> <br>
-            <input type="password" name="password" placeholder="Password" class="input_field" required> <br>
+            <input type="password" id="psw"name="password" placeholder="Password" class="input_field" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"title ="Must contain at least one number and one uppercase and lowercase letter, and at leats 8 or more characters"required> <br>
             <input type="submit" value="Sign Up" class="input_submit">
             <button onclick="window.location.href = '/'" class ="input_submit">Log In</button>
         </form>
     </div>
     
+    <script>
+        let PassInput = document.getElementById("psw");
+        PassInput.addEventListener("input",function(){
+            const Pass = PassInput.value
+            if (Pass.length < 8){
+                
+            }
+        })
+    </script>
 </body>
 </html>
     
